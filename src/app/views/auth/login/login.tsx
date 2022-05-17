@@ -1,11 +1,10 @@
 import { AuthCard } from '../components/authCard/AuthCard';
-import logo from '../../../assets/img/logo.png';
-import accountIcon from '../../../assets/icons/accountIcon.jpg';
-import passwordIcon from '../../../assets/icons/passwordIcon.jpg';
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../store/context/AuthContext';
 import { AuthService } from '../../../services/auth/ASuthService';
+import { MdPassword } from "react-icons/md";
+import { AiFillMail } from "react-icons/ai";
 
 export function Login() {
     const { dispatchUser }: any = useContext(AuthContext);
@@ -15,7 +14,9 @@ export function Login() {
     const handleSubmit = async () => {
         try {
 
+            //console.log('hola');
             const resp = await AuthService.login(auth);
+            this.props.history.push('/home');
         } catch (error) {
             console.log(error);
 
@@ -29,46 +30,39 @@ export function Login() {
             <AuthCard>
                 <form onSubmit={handleSubmit} autoComplete="off">
                     <div className="text-center mb-2">
-                        <img
-                            className="img-fluid"
-                            src={logo}
-                            alt="logo"
-                        />
-                    </div>
 
-                    <div className="mb-2 p-1 d-flex border rounded">
-                        <div className="mx-2 mt-1">
-                            <img
-                                className="img-fluid"
-                                src={accountIcon}
-                                alt="iconUser" />
+                    </div>
+                    <div className="d-flex align-items-start bd-highlight mb-3 example-parent" style={{ height: '50px' }}>
+                        <h1><AiFillMail /></h1>
+                        <div className="mb-2 p-1 d-flex border rounded">
+
+                            <input
+                                autoFocus
+                                className="form-control txt-input"
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                                onChange={e => handleChange(e)}
+                            />
                         </div>
-                        <input
-                            autoFocus
-                            className="form-control txt-input"
-                            name="email"
-                            type="email"
-                            placeholder="Email"
-                            onChange={e => handleChange(e)}
-                        />
                     </div>
 
-                    <div className="mb-2 p-1 d-flex border rounded">
-                        <div className="mx-2 mt-1">
-                            <img
-                                className="img-fluid"
-                                src={passwordIcon}
-                                alt="iconUser" />
+                    <div className="d-flex align-items-start bd-highlight mb-3 example-parent" style={{ height: '50px' }}>
+                        <h1><MdPassword /></h1>
+                        <div className="mb-2 p-1 d-flex border rounded">
+
+                            <div className="mx-2 mt-1">
+
+                            </div>
+                            <input
+                                className="form-control txt-input"
+                                name="password"
+                                type="password"
+                                placeholder="Password"
+                                onChange={e => handleChange(e)}
+                            />
                         </div>
-                        <input
-                            className="form-control txt-input"
-                            name="password"
-                            type="password"
-                            placeholder="Password"
-                            onChange={e => handleChange(e)}
-                        />
                     </div>
-
                     <div className="row d-flex justify-content-between mt-3 mb-2">
                         <div className="mb-3">
                             <div className="form-check ms-1">

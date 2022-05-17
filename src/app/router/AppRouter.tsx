@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { AuthRouter } from "../views/auth/AuthRouter";
 import { DashboardRouter } from "../views/dashboard/DashboardRouter";
+import { Home } from "../views/dashboard/home/Home";
 import { AuthContext } from '../views/store/context/AuthContext';
 import { PrivateRouter } from "./PrivateRouter";
 
@@ -17,7 +18,7 @@ interface User {
 export function AppRouter() {
     const { user }: Context = useContext(AuthContext);
     return (
-        <Router >
+        <BrowserRouter >
             <Switch >
                 <Route path='/auth' component={AuthRouter} />
                 <PrivateRouter
@@ -25,7 +26,8 @@ export function AppRouter() {
                     component={DashboardRouter} />
 
                 <Redirect to="dashboard/home" />
+                <Route exact path="/home" component={Home} />
             </Switch>
-        </Router>
+        </BrowserRouter>
     );
 }

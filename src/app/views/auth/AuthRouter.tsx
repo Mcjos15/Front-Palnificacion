@@ -3,11 +3,11 @@ import { Login } from './login/login';
 
 export function AuthRouter() {
     return (
-        <switch>
+        <Switch>
             <Route exact path="/auth/login">
                 <Login></Login>
             </Route>
             <Redirect to="/auth/login" />
-        </switch>
+        </Switch>
     );
 }
