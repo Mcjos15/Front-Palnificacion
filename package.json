@@ -1,5 +1,5 @@
 {
-  "name": "front-ts",
+  "name": "proy_planificacion",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,17 +7,15 @@
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.1",
-    "@types/node": "^16.11.34",
+    "@types/node": "^16.11.35",
     "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.3",
-    "@types/react-native": "^0.67.6",
+    "@types/react-dom": "^18.0.4",
     "axios": "^0.27.2",
-    "bootstrap": "^4.6.1",
+    "bootstrap": "^5.1.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-router-dom": "^5.3.1",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "sweetalert2": "^11.4.13",
     "typescript": "^4.6.4",
     "web-vitals": "^2.1.4"
   },
@@ -44,8 +42,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
   }
 }
