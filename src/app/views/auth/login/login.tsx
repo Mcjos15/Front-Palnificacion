@@ -1,7 +1,7 @@
 import { AuthCard } from '../components/authCard/AuthCard';
 import logo from '../../../assets/img/logo.png';
-import accountIcon from '../../../assets/icons/accountIcon.jpg';
-import passwordIcon from '../../../assets/icons/passwordIcon.jpg';
+import account from '../../../assets/icons/account.png';
+import password from '../../../assets/icons/password.png';
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../store/context/AuthContext';
@@ -40,7 +40,7 @@ export function Login() {
                         <div className="mx-2 mt-1">
                             <img
                                 className="img-fluid"
-                                src={accountIcon}
+                                src={account}
                                 alt="iconUser" />
                         </div>
                         <input
@@ -57,7 +57,7 @@ export function Login() {
                         <div className="mx-2 mt-1">
                             <img
                                 className="img-fluid"
-                                src={passwordIcon}
+                                src={password}
                                 alt="iconUser" />
                         </div>
                         <input
