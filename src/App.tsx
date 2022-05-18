@@ -11,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login/>}/>
         <Route path="/Registrar" element={<Registro/>}/>
+
       </Routes>
     </BrowserRouter>
   );

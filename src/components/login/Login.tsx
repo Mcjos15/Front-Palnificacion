@@ -2,14 +2,18 @@ import React, { useState } from 'react'
 import '../css/login.css'
 import axios from 'axios'
 
-interface User{
+import {
+  Link
+} from "react-router-dom";
+
+interface User {
   correo: string
   password: string
 }
 
 const Login = () => {
 
-  const [inputValues, setInputValues] = useState <User>({
+  const [inputValues, setInputValues] = useState<User>({
     correo: '',
     password: '',
   })
@@ -18,11 +22,12 @@ const Login = () => {
     evt.preventDefault();
 
     console.log(JSON.stringify(inputValues));
-    let user: User= {
-      correo:inputValues.correo,  
-      password:inputValues.password}
-        
-    axios.post('http://localhost:43012/api/user/search/',{correo:inputValues.correo, password:inputValues.password}).then(res =>{
+    let user: User = {
+      correo: inputValues.correo,
+      password: inputValues.password
+    }
+
+    axios.post('http://localhost:43012/api/user/search/', { correo: inputValues.correo, password: inputValues.password }).then(res => {
       console.log(JSON.stringify(res.data));
     })
   }
@@ -44,23 +49,23 @@ const Login = () => {
         <div className="username">
 
           <input type="text" onChange={handleChange} value={inputValues.correo}
-            name='correo' placeholder='Correo'/>
-          
+            name='correo' placeholder='Correo' />
+
 
         </div>
 
         <div className="username">
 
           <input type="password" onChange={handleChange} value={inputValues.password}
-            name='password' placeholder='Password'/>
-          
+            name='password' placeholder='Password' />
+
         </div>
 
         <button>
           INICIAR SESION
         </button>
         <div className="registro">
-          Quiero hacer el <a href="http://localhost:3000/Registro">registro</a>
+          Quiero hacer el <Link to="/Registrar">registro</Link>
         </div>
       </form>
     </div>
