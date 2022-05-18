@@ -2,7 +2,7 @@ export interface User {
   name: string
   lastName: string
   correo: string
-  date: Date
+  date: string
 
   password: string
 }
