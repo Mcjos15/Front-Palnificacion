@@ -2,18 +2,30 @@ import React, { useState } from 'react'
 import '../css/login.css'
 import axios from 'axios'
 
+<<<<<<< Updated upstream
 import {
   Link
 } from "react-router-dom";
 
 interface User {
+=======
+interface User{
+  id:string
+  name:string
+>>>>>>> Stashed changes
   correo: string
   password: string
 }
 
 const Login = () => {
 
+<<<<<<< Updated upstream
   const [inputValues, setInputValues] = useState<User>({
+=======
+  const [inputValues, setInputValues] = useState <User>({
+    id:'1',
+    name: 'hola',
+>>>>>>> Stashed changes
     correo: '',
     password: '',
   })
@@ -21,6 +33,7 @@ const Login = () => {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
+<<<<<<< Updated upstream
     console.log(JSON.stringify(inputValues));
     let user: User = {
       correo: inputValues.correo,
@@ -28,6 +41,10 @@ const Login = () => {
     }
 
     axios.post('http://localhost:43012/api/user/search/', { correo: inputValues.correo, password: inputValues.password }).then(res => {
+=======
+        
+    axios.post('http://localhost:43012/api/user/search/',inputValues).then(res =>{
+>>>>>>> Stashed changes
       console.log(JSON.stringify(res.data));
     })
   }
