@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import { User } from '../../interfaces/User'
 import '../css/login.css'
+import { AxiosClient } from '../../config/AxiosClient'
 
 const Registro = () => {
 
 
   const [passwordValue, setPasswordValue] = useState("");
 
+
   const [inputValues, setInputValues] = useState<User>({
-    name: '',
+    nombre: '',
     lastName: '',
     correo: '',
     date: '',
@@ -23,7 +25,9 @@ const Registro = () => {
       return alert('Contraseñas no coiciden');
 
     } else {
-
+      const axios = new AxiosClient();
+      axios.insertUser(inputValues);
+      return alert('Insertado');
     }
   }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +46,8 @@ const Registro = () => {
       <form onSubmit={handleSubmit}>
 
         <div className="username">
-          <input type="text" onChange={handleChange} value={inputValues.name}
-            name='name' placeholder='Nombre' required />
+          <input type="text" onChange={handleChange} value={inputValues.nombre}
+            name='nombre' placeholder='Nombre' required />
           <input type="text" onChange={handleChange} value={inputValues.lastName}
             name='lastName' placeholder='Apellido' required />
           <input type="date" onChange={handleChange} value={inputValues.date}
