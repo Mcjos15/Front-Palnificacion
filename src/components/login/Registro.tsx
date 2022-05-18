@@ -1,14 +1,21 @@
 import React, { useState } from 'react'
 import { User } from '../../interfaces/User'
-import Card from 'react-bootstrap/Card'
 import '../css/login.css'
+import Calendar from '../shared/calendar'
 
 const Registro = () => {
 
+  const calendar = <Calendar />
+
   const [inputValues, setInputValues] = useState<User>({
+    name: '',
+    lastName: '',
     correo: '',
-    password: '',
+    date: new Date(),
+
+    password: ''
   })
+  const [passwordValue, setPaswordValue] = useState("");
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
 
@@ -31,7 +38,7 @@ const Registro = () => {
 
 
         </div>
-
+        {calendar}
         <div className="username">
 
           <input type="password" onChange={handleChange} value={inputValues.password}
