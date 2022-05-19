@@ -7,13 +7,18 @@ import {
 } from "react-router-dom";
 
 interface User {
+  id: string
+  name: string
   correo: string
   password: string
 }
 
 const Login = () => {
 
+
   const [inputValues, setInputValues] = useState<User>({
+    id: '1',
+    name: 'hola',
     correo: '',
     password: '',
   })
@@ -21,11 +26,8 @@ const Login = () => {
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
+
     console.log(JSON.stringify(inputValues));
-    let user: User = {
-      correo: inputValues.correo,
-      password: inputValues.password
-    }
 
 
     AxiosClient.post('/api/user/search/', { correo: inputValues.correo, password: inputValues.password }).then(res => {
@@ -38,47 +40,49 @@ const Login = () => {
         title: error.status,
         text: error.code,
       });
+
+
     })
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputValues({
+        ...inputValues,
+        [e.target.name]: e.target.value
+      })
+    }
+
+    return (
+      <div className="formulario">
+
+        <h1>Inicio de sesión</h1>
+
+        <form onSubmit={handleSubmit}>
+
+          <div className="username">
+
+            <input type="text" onChange={handleChange} value={inputValues.correo}
+              name='correo' placeholder='Correo' />
+
+
+          </div>
+
+          <div className="username">
+
+            <input type="password" onChange={handleChange} value={inputValues.password}
+              name='password' placeholder='Password' />
+
+          </div>
+
+          <button>
+            INICIAR SESION
+          </button>
+          <div className="registro">
+            Quiero hacer el <Link to="/Registrar">registro</Link>
+          </div>
+        </form>
+      </div>
+    )
   }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValues({
-      ...inputValues,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  return (
-    <div className="formulario">
-
-      <h1>Inicio de sesión</h1>
-
-      <form onSubmit={handleSubmit}>
-
-        <div className="username">
-
-          <input type="text" onChange={handleChange} value={inputValues.correo}
-            name='correo' placeholder='Correo' />
-
-
-        </div>
-
-        <div className="username">
-
-          <input type="password" onChange={handleChange} value={inputValues.password}
-            name='password' placeholder='Password' />
-
-        </div>
-
-        <button>
-          INICIAR SESION
-        </button>
-        <div className="registro">
-          Quiero hacer el <Link to="/Registrar">registro</Link>
-        </div>
-      </form>
-    </div>
-  )
 }
-
 export default Login
