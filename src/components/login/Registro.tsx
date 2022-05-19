@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { User } from '../../interfaces/User'
 import '../css/login.css'
 import AxiosClient from '../../config/AxiosClient'
-import Botton from '../shared/botton'
-import { Link } from 'react-router-dom'
 const Registro = () => {
 
 
