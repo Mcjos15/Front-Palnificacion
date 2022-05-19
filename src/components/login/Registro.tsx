@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { User } from '../../interfaces/User'
 import '../css/login.css'
-import AxiosClient from '../../config/AxiosClient'
+import Swal from 'sweetalert2'
 const Registro = () => {
 
 
@@ -24,9 +24,16 @@ const Registro = () => {
       return alert('Contraseñas no coiciden');
 
     } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Login exitoso',
+        showConfirmButton: false,
+        timer: 1000
+      }).then((res) => {
 
-      console.log(AxiosClient.post('/api/user/search/', inputValues));
-      alert('Insertado');
+        window.location.href = '/';
+      })
 
     }
   }

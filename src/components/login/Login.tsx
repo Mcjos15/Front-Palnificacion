@@ -29,7 +29,7 @@ const Login = () => {
 
     AxiosClient.post('/api/user/search/', { correo: inputValues.correo, password: inputValues.password }).then(res => {
       console.log(JSON.stringify(res));
-      Swal.fire("Correcto", "El usuario se logueo correctamente", "success");
+      window.location.href = '/';
     }).catch(error => {
       console.log(error);
 
