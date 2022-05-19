@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { User } from '../../interfaces/User'
 import '../css/login.css'
-import { AxiosClient } from '../../config/AxiosClient'
-
+import AxiosClient from '../../config/AxiosClient'
+import Botton from '../shared/botton'
+import { Link } from 'react-router-dom'
 const Registro = () => {
 
 
@@ -10,7 +11,7 @@ const Registro = () => {
 
 
   const [inputValues, setInputValues] = useState<User>({
-    nombre: '',
+    Name: '',
     lastName: '',
     correo: '',
     date: '',
@@ -20,14 +21,15 @@ const Registro = () => {
 
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-
+    evt.preventDefault();
     if (inputValues.password !== passwordValue) {
       return alert('Contraseñas no coiciden');
 
     } else {
-      const axios = new AxiosClient();
-      axios.insertUser(inputValues);
-      return alert('Insertado');
+
+      console.log(AxiosClient.post('/api/user/search/', inputValues));
+      alert('Insertado');
+
     }
   }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,8 +48,8 @@ const Registro = () => {
       <form onSubmit={handleSubmit}>
 
         <div className="username">
-          <input type="text" onChange={handleChange} value={inputValues.nombre}
-            name='nombre' placeholder='Nombre' required />
+          <input type="text" onChange={handleChange} value={inputValues.Name}
+            name='Name' placeholder='Nombre' required />
           <input type="text" onChange={handleChange} value={inputValues.lastName}
             name='lastName' placeholder='Apellido' required />
           <input type="date" onChange={handleChange} value={inputValues.date}
@@ -58,7 +60,6 @@ const Registro = () => {
 
 
         </div>
-
         <div className="username">
 
           <input type="password" onChange={handleChange} value={inputValues.password}

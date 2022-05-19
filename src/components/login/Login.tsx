@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../css/login.css'
-import axios from 'axios'
-
+import AxiosClient from '../../config/AxiosClient'
+import Swal from 'sweetalert2'
 import {
   Link
 } from "react-router-dom";
@@ -18,7 +18,7 @@ const Login = () => {
     password: '',
   })
 
-  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     console.log(JSON.stringify(inputValues));
@@ -27,8 +27,17 @@ const Login = () => {
       password: inputValues.password
     }
 
-    axios.post('http://localhost:43012/api/user/search/', { correo: inputValues.correo, password: inputValues.password }).then(res => {
-      console.log(JSON.stringify(res.data));
+
+    AxiosClient.post('/api/user/search/', { correo: inputValues.correo, password: inputValues.password }).then(res => {
+      console.log(JSON.stringify(res));
+      Swal.fire("Correcto", "El usuario se logueo correctamente", "success");
+    }).catch(error => {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: error.status,
+        text: error.code,
+      });
     })
   }
 
