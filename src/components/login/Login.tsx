@@ -3,13 +3,15 @@ import '../css/login.css'
 import AxiosClient from '../../config/AxiosClient'
 import Swal from 'sweetalert2'
 import {
-  Link
+  Link, useNavigate
 } from "react-router-dom";
+
+
 import { User } from '../../interfaces/User';
 
 
 const Login = () => {
-
+  const navigate = useNavigate();
 
   const [inputValues, setInputValues] = useState<User>({
 
@@ -24,12 +26,13 @@ const Login = () => {
     evt.preventDefault();
 
 
-    console.log(JSON.stringify(inputValues));
 
 
-    AxiosClient.post('/api/user/search/', { correo: inputValues.correo, password: inputValues.password }).then(res => {
-      console.log(JSON.stringify(res));
-      window.location.href = '/';
+
+    AxiosClient.post('/api/user/search/', inputValues).then(res => {
+      //console.log(JSON.stringify(res));
+      navigate("home");
+      //window.location.href = '/Home';
     }).catch(error => {
       console.log(error);
 
@@ -37,7 +40,7 @@ const Login = () => {
         Swal.fire({
           icon: "error",
           title: error.status,
-          text: "2Server",
+          text: "No hay conexión con el server",
         });
       } else {
         Swal.fire({
