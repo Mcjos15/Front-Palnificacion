@@ -1,0 +1,46 @@
+.pie-pagina{
+    width: 100%;
+    background-color: hsl(283, 50%, 20%);
+    
+}
+.pie-pagina .grupo-1{
+    width: 100%;
+    margin: auto;
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap:50px;
+}
+
+.pie-pagina .grupo-1 .box h2{
+    color: #fff;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+.pie-pagina .grupo-1 .box p{
+    color: #efefef;
+    margin-bottom: 10px;
+}
+
+.pie-pagina .grupo-2{
+    background-color: #3da167;
+    padding: 15px 10px;
+    text-align: center;
+    color: #fff;
+}
+.pie-pagina .grupo-2 small{
+    font-size: 15px;
+}
+@media screen and (max-width:800px){
+    .pie-pagina .grupo-1{
+        width: 90%;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap:30px;
+        padding: 35px 0px;
+    }
+}
+.footer{
+    position: fixed;
+    height: 155px;
+    width: 100%;
+    bottom: 0;
+}

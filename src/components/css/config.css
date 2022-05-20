@@ -1,0 +1,25 @@
+h1{
+	text-align: center;
+	margin-left: 250px;
+    padding-top: 30px;
+}
+.insert{
+	width:70px;
+	margin-left:250px;
+
+}
+.insert:hover{
+	border-color: black;
+	color: black;
+}
+
+table{
+	margin-left: 250px;
+    padding-top: 51px;
+}
+
+.alert{
+	width: 70%;
+    margin-left: 250px;
+}
+

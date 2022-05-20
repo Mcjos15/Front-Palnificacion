@@ -1,20 +1,13 @@
 import React from 'react'
 import '../css/home.css'
+import Navbar from '../shared/Navbar'
+import Footer from '../shared/Footer'
 
 const Home = () => {
 
     return (
-        <header className="bg_animate">
-            <div className="header_nav">
-                <div className="contenedor">
-                    <h1>Bienvenido</h1>
-                    <nav>
-                        <a href="#">Configuraciones</a>
-                        <a href="#">Mi perfil</a>
-                        <a href="/">Salir</a>
-                    </nav>
-                </div>
-            </div>
+        <div>
+            <Navbar></Navbar>
             <section className="banner contenedor">
             <div className="banner_img">
                 {/* <img src="laptop-support.png" alt=""> */}
@@ -33,7 +26,8 @@ const Home = () => {
             <div className="burbuja"></div>
             <div className="burbuja"></div>
         </div>
-        </header>
+            < Footer></Footer>
+        </div>
     );
 }
 
