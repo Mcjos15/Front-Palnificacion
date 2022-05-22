@@ -81,7 +81,7 @@ const Config = () => {
 
             <div className="row">
                 <div className="col-md-2">
-                    <h1>Configuraciones</h1>
+                    <h1 className="titulo">Configuraciones</h1>
                 </div>
                 <div className="row">
                 </div>
