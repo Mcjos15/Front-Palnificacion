@@ -1,5 +1,7 @@
 import React from 'react'
 import '../css/home.css'
+import Navbar from '../shared/Navbar'
+import Footer from '../shared/Footer'
 
 const Home = () => {
 
@@ -34,7 +36,9 @@ const Home = () => {
             <div className="burbuja"></div>
             <div className="burbuja"></div>
         </div>
-        </header>
+        <div></div>
+            < Footer></Footer>
+        </div>
     );
 }
 

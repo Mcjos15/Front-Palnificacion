@@ -4,6 +4,8 @@ import './App.css';
 import Login from './components/login/Login';
 import Registro from './components/login/Registro';
 import Home from './components/layouts/Home';
+import Configuracion from './components/configuracionesSistema/Config'
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
@@ -18,6 +20,7 @@ function App() {
         <Route path="/" element={<Login/>}/>
         <Route path="/Registrar" element={<Registro/>}/>
         <Route path="/Home" element={<Home/>}/>
+        <Route path="/Config" element={<Configuracion/>}/>
       </Routes>
     </BrowserRouter>
   );
