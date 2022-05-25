@@ -10,6 +10,7 @@ const Home = () => {
                     <h1>Bienvenido</h1>
                     <nav>
                         <a href="#">Configuraciones</a>
+                        <a href="#">documentos</a>
                         <a href="#">Mi perfil</a>
                         <a href="/">Salir</a>
                     </nav>

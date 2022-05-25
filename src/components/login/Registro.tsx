@@ -2,9 +2,15 @@ import React, { useState } from 'react'
 import { User } from '../../interfaces/User'
 import '../css/login.css'
 import Swal from 'sweetalert2'
+import AxiosClient from '../../config/AxiosClient';
+import {
+  useNavigate
+} from "react-router-dom";
 const Registro = () => {
 
+  
 
+  const navigate = useNavigate();
   const [passwordValue, setPasswordValue] = useState("");
 
 
@@ -24,15 +30,34 @@ const Registro = () => {
       return alert('Contraseñas no coiciden');
 
     } else {
+      AxiosClient.post('/api/user/', inputValues)
+        .catch(error => {
+          console.log(error);
+
+          if (error.code === "ERR_NETWORK") {
+            Swal.fire({
+              icon: "error",
+              title: error.status,
+              text: "No hay conexión con el server",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: error.status,
+              text: error.code,
+            });
+          }
+
+        })
       Swal.fire({
         position: 'center',
         icon: 'success',
         title: 'Login exitoso',
         showConfirmButton: false,
         timer: 1000
-      }).then((res) => {
+      }).then(() => {
 
-        window.location.href = '/';
+        navigate("../");
       })
 
     }

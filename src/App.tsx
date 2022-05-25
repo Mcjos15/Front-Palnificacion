@@ -6,8 +6,13 @@ import Registro from './components/login/Registro';
 import Home from './components/layouts/Home';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+
+
+
 function App() {
   return (
+
+    
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login/>}/>
