@@ -1,6 +1,6 @@
 .pie-pagina{
     width: 100%;
-    background-color: hsl(283, 50%, 20%);
+    background-color: hsl(285, 4%, 38%);
     
 }
 .pie-pagina .grupo-1{
@@ -22,7 +22,7 @@
 }
 
 .pie-pagina .grupo-2{
-    background-color: #3da167;
+    background-color: #232725;
     padding: 15px 10px;
     text-align: center;
     color: #fff;

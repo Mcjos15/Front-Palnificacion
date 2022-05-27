@@ -26,23 +26,10 @@ const Login = () => {
   const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-
-
-
-<<<<<<< Updated upstream
-
     AxiosClient.post('/api/user/search/', inputValues).then(res => {
-      //console.log(JSON.stringify(res));
       navigate("home");
-      //window.location.href = '/Home';
-=======
-    AxiosClient.post('/api/user/search/', { correo: inputValues.correo, password: inputValues.password }).then(res => {
-      console.log(JSON.stringify(res));
-      window.location.href = '/home';
->>>>>>> Stashed changes
     }).catch(error => {
-      console.log(error);
-
+     
       if (error.code === "ERR_NETWORK") {
         Swal.fire({
           icon: "error",

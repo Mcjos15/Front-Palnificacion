@@ -74,9 +74,8 @@ const Config = () => {
 
     return (
         <div id="main-container">
-
-            <div className='container'>
-
+            <div>
+            <Navbar></Navbar>
             </div>
 
             <div className="row">
