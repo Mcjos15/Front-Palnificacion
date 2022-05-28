@@ -16,21 +16,21 @@ const Navbar = () => {
                     </a>
                 </li>
                 <li>
-                    <a href="#" className="nav-link py-3 border-bottom">
+                    <a href="/Documents" className="nav-link py-3 border-bottom">
                     <FontAwesomeIcon icon={faBook}></FontAwesomeIcon>
-                        <small> Archivos</small>
+                        <small>Documents</small>
                     </a>
                 </li>
                 <li>
-                    <a href="#" className="nav-link py-3 border-bottom">
+                    <a href="/Config" className="nav-link py-3 border-bottom">
                     <FontAwesomeIcon icon={faCog}></FontAwesomeIcon>
                         <small> Settings</small>
                     </a>
                 </li>
                 <li>
-                    <a href="#" className="nav-link py-3 border-bottom">
+                    <a href="/" className="nav-link py-3 border-bottom">
                     <FontAwesomeIcon icon={faArrowRightFromBracket}></FontAwesomeIcon>
-                        <small> Salir</small>
+                        <small> Exit</small>
                     </a>
                 </li>
             </ul>
