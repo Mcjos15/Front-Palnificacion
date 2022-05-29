@@ -1,25 +1,13 @@
-.titulo{
-	text-align: center;
-	margin-left: 250px;
-    padding-top: 30px;
-}
-.insert{
-	width:70px;
-	margin-left:250px;
-
-}
-.insert:hover{
-	border-color: black;
-	color: black;
+.tableC{
+	width: 100%;
+	border: 3px solid black;
+	width: 100%;
+    border-collapse: collapse;
 }
 
-table{
-	margin-left: 250px;
-    padding-top: 51px;
+.tableC tr{
+	border: 3px solid black;
 }
-
-.alert{
-	width: 70%;
-    margin-left: 250px;
+.tableC th{
+	border: 3px solid black;
 }
-
