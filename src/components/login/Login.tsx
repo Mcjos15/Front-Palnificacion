@@ -28,6 +28,7 @@ const Login = () => {
 
     AxiosClient.post('/api/user/search/', inputValues).then(res => {
       navigate("home");
+      //window.location.href = '/Home';
     }).catch(error => {
      
       if (error.code === "ERR_NETWORK") {

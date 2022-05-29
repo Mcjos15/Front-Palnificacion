@@ -6,7 +6,8 @@ import Footer from '../shared/Footer'
 const Home = () => {
 
     return (
-        <header className="bg_animate">
+
+        <><header className="bg_animate">
             <div className="header_nav">
                 <div className="contenedor">
                     <h1>Bienvenido</h1>
@@ -36,12 +37,9 @@ const Home = () => {
                 <div className="burbuja"></div>
                 <div className="burbuja"></div>
             </div>
-            <div>
-                < Footer></Footer>
-            </div>
-
-        </header>
-
+        </header><div>
+                <Footer></Footer>
+            </div></>
     );
 }
 
