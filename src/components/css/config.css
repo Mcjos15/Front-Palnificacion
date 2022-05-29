@@ -1,0 +1,13 @@
+.tableC{
+	width: 100%;
+	border: 3px solid black;
+	width: 100%;
+    border-collapse: collapse;
+}
+
+.tableC tr{
+	border: 3px solid black;
+}
+.tableC th{
+	border: 3px solid black;
+}
