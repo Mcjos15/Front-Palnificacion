@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import Navbar from '../shared/Navbar'
 import Footer from '../shared/Footer'
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Container, Row, Col, Modal } from 'react-bootstrap';
+import { Button, Row, Col, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
@@ -160,8 +160,6 @@ const Config = () => {
                             </div>
                             <div className="col"></div>
                             <div className="col"></div>
-
-
                         </div>
 
                         <div className="row">

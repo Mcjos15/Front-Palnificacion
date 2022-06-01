@@ -27,7 +27,10 @@ const Login = () => {
     evt.preventDefault();
 
     AxiosClient.post('/api/user/search/', inputValues).then(res => {
+      console.log(res.data)
+      localStorage.setItem("user",JSON.stringify(res.data));
       navigate("home");
+      //window.location.href = '/Home';
     }).catch(error => {
      
       if (error.code === "ERR_NETWORK") {
