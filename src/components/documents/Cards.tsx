@@ -1,31 +1,98 @@
-import React from 'react';
-import Card from './Card'
+import React, { useEffect, useState } from 'react';
+import Card from './Card';
 import doc from '../../assets/Image/documento.png'
+import AxiosClient from '../../config/AxiosClient';
+import { Documents } from '../../interfaces/Documents';
+import Swal from 'sweetalert2';
+
+interface Card {
+    id?:string,
+    image: string,
+    propietario: string,
+    name: string,
+    type: string,
+    dateCreation: string,
+    size: string,
+    base64:string
+}
 
 
-const cards =[{
-    image:doc,
-    propietario: 'meli',
-    name:'holi',
-    type:'txt',
-    dateCreation: '05/05/2022',
-    size: '80gb'
-}]
+const cardData: Card[] = [];
 
 function Cards() {
+    const [cards, setCards] = useState<Array<Card>>([])
+    const [documentos, setDocumentos] = React.useState<Documents | null>()
+    useEffect(() => {
+
+
+        AxiosClient.get('/api/documents/').then(res => {
+
+
+            const value = res.data;
+            console.log(value);
+            for (let i = 0; i < value.length; i++) {
+                console.log(value[i]);
+                cardData.push({
+                    id: value[i].id,
+                    image: doc,
+                    propietario: value[i].propietario,
+                    name: value[i].name,
+                    type: value[i].type,
+                    dateCreation: value[i].dateCreation,
+                    size: value[i].size,
+                    base64:value[i].Base64
+                });
+
+                //console.log(
+                //urltoFile(value[i].Base64, value[i].name, value[i].type));
+                //generaDescargablePdf(value[i].Base64, value[i].name,);
+
+            }
+            setCards(cardData);
+
+           /* setDocumentos({
+                propietario: value.id,
+                name: value.name,
+                type: value.type,
+                //dateCreation: value.lastModified.toString(),
+                //size: value.size.toString(),
+                base64: value
+            })*/
+
+
+
+            //window.location.href = '/Home';
+        }).catch(error => {
+
+
+            Swal.fire({
+                icon: "error",
+                title: error.status,
+                text: error.code,
+            });
+            console.log(error);
+
+
+        })
+    }, [])
     return (
         <div className="container d-flex justify-content-center h-100">
             <div className="row">
-            {/*    {
-                   cards.map(card =>{
-                       <div className="col-md-4" key={card.name}>
-                         <Card></Card>
-                       </div>
-                   })
-               } */}
-               </div>
+                {
+                    cards.map((card: Card) => {
+                        return (
+                            <div className="col-md-4" key={card.id}>
+
+                                <Card imageSource={card.image} title={card.name} text={card.size+' '+card.propietario}
+                                base64={card.base64} type={card.type}></Card>
+                                <br></br>
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
-    )
+    );
 }
 
 export default Cards

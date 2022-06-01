@@ -4,12 +4,22 @@ import AxiosClient from '../../config/AxiosClient';
 import { Documents } from '../../interfaces/Documents';
 
 function urltoFile(url: string, filename: string, mimeType: string) {
+
     return (fetch(url)
         .then(function (res) { return res.arrayBuffer(); })
         .then(function (buf) { return new File([buf], filename, { type: mimeType }); })
+        .then((response) => {
+            const url = window.URL
+                  .createObjectURL(new Blob([response]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+      })
     );
 }
-
 const ShowDocuments = () => {
     const url = '';
 
@@ -22,7 +32,9 @@ const ShowDocuments = () => {
             console.log(value);
             for (let i = 0; i < value.length; i++) {
                 console.log(value[i]);
-                urltoFile(value[i].Base64, value[i].name, value[i].type);
+                console.log(
+                    urltoFile(value[i].Base64, value[i].name, value[i].type));
+                //generaDescargablePdf(value[i].Base64, value[i].name,);
 
             }
 
@@ -46,6 +58,7 @@ const ShowDocuments = () => {
                 title: error.status,
                 text: error.code,
             });
+            console.log(error);
 
 
         })
@@ -54,8 +67,7 @@ const ShowDocuments = () => {
 
     return (
         <div className="App">
-          {/* <h1>React File Viewer Demo</h1>
-          <FileViewer fileType={type} filePath={file} onError={onError} /> */}
+            {<h1>React File Viewer Demo</h1>}
         </div>
     );
 

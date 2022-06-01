@@ -9,6 +9,7 @@ import Documents from './components/documents/Documentos'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ShowDocuments from './components/documents/ShowDocuments';
+import Cards from './components/documents/Cards';
 
 
 
@@ -24,7 +25,7 @@ function App() {
         <Route path="/Home" element={<Home/>}/>
         <Route path="/Config" element={<Configuracion/>}/>
         <Route path="/Documents" element={<Documents/>}/>
-        <Route path="/ShowDocuments" element={<ShowDocuments/>}/>
+        <Route path="/card" element={<Cards/>}/>
       </Routes>
     </BrowserRouter>
   );
