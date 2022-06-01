@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@types/pdf-viewer-reactjs": "^2.2.2",
     "@types/react-calendar": "^3.5.1",
     "@types/react-datepicker": "^4.4.1",
     "@types/react-router-dom": "^5.3.3"

@@ -8,6 +8,7 @@ import Configuracion from './components/configuracionesSistema/Config'
 import Documents from './components/documents/Documentos'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ShowDocuments from './components/documents/ShowDocuments';
 
 
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/Home" element={<Home/>}/>
         <Route path="/Config" element={<Configuracion/>}/>
         <Route path="/Documents" element={<Documents/>}/>
+        <Route path="/ShowDocuments" element={<ShowDocuments/>}/>
       </Routes>
     </BrowserRouter>
   );

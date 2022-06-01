@@ -14,6 +14,7 @@ const Home = () => {
                     <nav>
                         <a href="/Config">Configuraciones</a>
                         <a href="/Documents">documentos</a>
+                        <a href="/ShowDocuments">Showdocumentos</a>
                         <a href="#">Mi perfil</a>
                         <a href="/">Salir</a>
                     </nav>
