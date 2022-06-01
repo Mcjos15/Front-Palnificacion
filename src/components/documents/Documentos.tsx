@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import Footer from '../shared/Footer'
 import { Documents } from '../../interfaces/Documents';
-import { ListGroupItemProps } from 'react-bootstrap';
-
+import { ListGroupItemProps, Button, Row, Col, Modal } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 import AxiosClient from '../../config/AxiosClient'
 import Swal from 'sweetalert2'
 import { User } from '../../interfaces/User';
+
+import Cards from './Cards'
 
 const Documentos = () => {
 
@@ -15,6 +19,10 @@ const Documentos = () => {
   const [archivos, setArchivos] = React.useState<FileList | null>()
 
   const [documentos, setDocumentos] = React.useState<Documents | null>()
+
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   //Obtiene los archivos y se ingresa al useState trato que inserten varios
 
@@ -100,15 +108,64 @@ const Documentos = () => {
 
   return (
     <div>
-      <div>
-        {/* < Navbar></Navbar> */}
+      <div className="row">
+        <Col>Nombre Persona</Col>
       </div>
-      <div>
-        <input type="file" name="files" multiple onChange={subirArchivos} />
-        <button onClick={insertArchivos} >Subir Archivos</button>
+      <div className="row ">
+        <Col className='col-sm-2'>
+          <Navbar></Navbar>
+        </Col>
+
+        <Col className="col-sm-10">
+          <div className="row">
+            <div className="row">
+              <h1 className="titulo">Documentos</h1>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <Button type="button" className="insert" onClick={handleShow}>Insertar</Button>
+              </div>
+              <div className="col"></div>
+              <div className="col"></div>
+            </div>
+
+            <div className="row">
+              <div className="col col-sm-9">
+                < Cards />
+              </div>
+
+              <div className="row"></div>
+
+              <div>
+                <Modal show={showModal} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Elegir Documento</Modal.Title>
+                  </Modal.Header>
+
+                  <Modal.Body>
+                    <div>
+                      <input type="file" name="files" multiple onChange={subirArchivos} />
+                      <button onClick={insertArchivos} >Subir Archivos</button>
+                    </div>
+
+                  </Modal.Body>
+
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose} >Close</Button>
+                  </Modal.Footer>
+                </Modal>
+              </div>
+
+            </div>
+
+          </div>
+        </Col>
+
       </div>
-      <div>
-        {/* < Footer></Footer> */}
+
+      <div className="row">
+        <Footer></Footer>
       </div>
     </div>
   );
