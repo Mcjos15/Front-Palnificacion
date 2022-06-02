@@ -72,6 +72,17 @@ const Documentos = () => {
 
             console.log(documentos)
             AxiosClient.post('/api/documents/', documentos).then(res => {
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Insertado éxitosamente',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+              handleClose();
+                //navigate('/Config');
+               
+            })
 
               //window.location.href = '/Home';
             }).catch(error => {
@@ -109,7 +120,7 @@ const Documentos = () => {
   return (
     <div>
       <div className="row">
-        <Col>Nombre Persona</Col>
+        <Col></Col>
       </div>
       <div className="row ">
         <Col className='col-sm-2'>
@@ -132,7 +143,7 @@ const Documentos = () => {
 
             <div className="row">
               <div className="col col-sm-9">
-                < Cards />
+                 {/* < Cards />  */}
               </div>
 
               <div className="row"></div>

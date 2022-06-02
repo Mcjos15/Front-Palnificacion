@@ -43,25 +43,9 @@ function Cards() {
                     base64:value[i].Base64
                 });
 
-                //console.log(
-                //urltoFile(value[i].Base64, value[i].name, value[i].type));
-                //generaDescargablePdf(value[i].Base64, value[i].name,);
-
             }
             setCards(cardData);
 
-           /* setDocumentos({
-                propietario: value.id,
-                name: value.name,
-                type: value.type,
-                //dateCreation: value.lastModified.toString(),
-                //size: value.size.toString(),
-                base64: value
-            })*/
-
-
-
-            //window.location.href = '/Home';
         }).catch(error => {
 
 
@@ -71,7 +55,6 @@ function Cards() {
                 text: error.code,
             });
             console.log(error);
-
 
         })
     }, [])
