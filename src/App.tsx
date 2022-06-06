@@ -13,23 +13,30 @@ import ShowDocuments from './components/documents/ShowDocuments';
 import Cards from './components/documents/Cards';
 
 
+///de aca abajo para el menu
+import { SideBarMenu } from './components/shared/SideBarMenu';
+import { SideBarMenuCard, SideBarMenuItem } from './types/types';
+import { FcAdvertising } from 'react-icons/fc';
+import "./components/scss/SideBarMenu.scss"
 
+import profile from './assets/Image/descarga.png'
 
 function App() {
+
   return (
 
-    
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login/>}/>
-        <Route path="/Registrar" element={<Registro/>}/>
-        <Route path="/Home" element={<Home/>}/>
-        <Route path="/Config" element={<Configuracion/>}/>
-        <Route path="/Documents" element={<Documents/>}/>
-        <Route path="/card" element={<Cards/>}/>
-        <Route path="/ViewDocument" element={<ViewDocuments/>}/>
-      </Routes>
+    <Routes>
+      <Route path="/" element={<Login/>}/>
+      <Route path="/Registrar" element={<Registro/>}/>
+      <Route path="/Home" element={<Home/>}/>
+      <Route path="/Config" element={<Configuracion/>}/>
+      <Route path="/Documents" element={<Documents/>}/>
+      <Route path="/card" element={<Cards/>}/>
+      <Route path="/ViewDocument" element={<ViewDocuments/>}/>
+    </Routes>
     </BrowserRouter>
+
   );
 }
 
