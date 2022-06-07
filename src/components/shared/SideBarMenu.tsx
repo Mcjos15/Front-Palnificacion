@@ -1,17 +1,21 @@
-import { SideBarMenuItem, SideBarMenuCard } from '../../types/types';
-import { useState } from 'react'
+
+import { useContext, useState } from 'react'
 import { classNames } from '../../util/classes';
 import { VscMenu } from 'react-icons/vsc'
 import SideBarMenuCardView from './SideBarMenuCardView';
 import SideBarMenuItemView from './SideBarMenuItemView';
-interface SideBarMenuProps {
-    items: SideBarMenuItem[];
-    card: SideBarMenuCard
-}
+import { SideBarMenuContext } from '../../context/SideBarMenu-context';
 
-export function SideBarMenu({ items, card }: SideBarMenuProps) {
 
-    const [isOpen, setIsOpen] = useState<boolean>(true);
+//{ items, card }: SideBarMenuProps
+
+export function SideBarMenu() {
+
+    // const {items,card} = useSideBarMenu(); 
+    const { SideBarMenuState } = useContext(SideBarMenuContext);
+    const { card, items } = SideBarMenuState;
+
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     function handleClick() {
 

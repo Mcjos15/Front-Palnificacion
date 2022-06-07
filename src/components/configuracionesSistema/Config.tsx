@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import '../css/config.css'
-
+import { SideBarMenu } from '../shared/SideBarMenu';
 
 interface Config {
     id: string
@@ -147,6 +147,7 @@ const Config = () => {
             <Row>
                 <Col className='col-sm-2'>
                     <Navbar></Navbar>
+                    <SideBarMenu />
                 </Col>
                 <Col className="col-sm-10">
                     <div className="row">

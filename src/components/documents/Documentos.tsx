@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../shared/Navbar'
+import React, { useState } from 'react'
+
 import Footer from '../shared/Footer'
 import { Documents } from '../../interfaces/Documents';
-import { ListGroupItemProps, Button, Row, Col, Modal } from 'react-bootstrap';
+import { Button, Col, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+
 
 import AxiosClient from '../../config/AxiosClient'
 import Swal from 'sweetalert2'
 import { User } from '../../interfaces/User';
+import { SideBarMenu } from '../shared/SideBarMenu';
 
-import Cards from './Cards'
 
 const Documentos = () => {
 
@@ -124,7 +123,9 @@ const Documentos = () => {
       </div>
       <div className="row ">
         <Col className='col-sm-2'>
-          <Navbar></Navbar>
+
+        <SideBarMenu />
+    
         </Col>
 
         <Col className="col-sm-10">
