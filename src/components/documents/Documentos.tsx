@@ -2,16 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../shared/Navbar'
 import Footer from '../shared/Footer'
 import { Documents } from '../../interfaces/Documents';
-import { ListGroupItemProps, Button, Row, Col, Modal } from 'react-bootstrap';
+import { Button, Col, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-
 import AxiosClient from '../../config/AxiosClient'
 import Swal from 'sweetalert2'
 import { User } from '../../interfaces/User';
-
-import Cards from './Cards'
 
 const Documentos = () => {
 
@@ -40,67 +35,87 @@ const Documentos = () => {
   //Se supone que este inserta con el boton 
   const insertArchivos = function (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
 
+    var extensiones = /(.txt|.docx|.xlsx|.pptx|.pdf|.jpg|.png)$/i;
     if (archivos) {
 
       Array.from(archivos).forEach(archivo => {
-        const reader = new FileReader();
-        reader.readAsDataURL(archivo);
-        reader.onload = function () {
+        console.log(archivo.name);
 
-          const base64 = reader.result;
+        if (!extensiones.exec(archivo.name)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Extension Incorrecta',
+            text: '¡No se permite esa extension!',
+            footer: '<a href="">solo .txt|.docx|.xlsx|.pptx|.pdf|.jpg|.png</a>'
+          })
 
-          if (localStorage.getItem("user")) {
-            const data = (JSON.parse(localStorage.getItem("user")!));
-            const user: User = {
-              id: data.id,
-              Name: data.Name,
-              lastName: data.lastName,
-              correo: data.correo,
-              date: data.date,
-              password: ''
-            }
+        } else {
+          const reader = new FileReader();
+          reader.readAsDataURL(archivo);
+          reader.onload = function () {
 
-            console.log(archivo.type)
-            setDocumentos({
-              propietario: user.id,
-              name: archivo.name,
-              type: archivo.type,
-              dateCreation: archivo.lastModified.toString(),
-              size: archivo.size.toString(),
-              base64: base64
-            });
+            const base64 = reader.result;
 
-            console.log(documentos)
-            AxiosClient.post('/api/documents/', documentos).then(res => {
-
-              //window.location.href = '/Home';
-            }).catch(error => {
-
-              if (error.code === "ERR_NETWORK") {
-                Swal.fire({
-                  icon: "error",
-                  title: error.status,
-                  text: "No hay conexión con el server",
-                });
-              } else {
-                Swal.fire({
-                  icon: "error",
-                  title: error.status,
-                  text: error.code,
-                });
+            if (localStorage.getItem("user")) {
+              const data = (JSON.parse(localStorage.getItem("user")!));
+              const user: User = {
+                id: data.id,
+                Name: data.Name,
+                lastName: data.lastName,
+                correo: data.correo,
+                date: data.date,
+                password: ''
               }
 
-            })
+              console.log(archivo.type)
+              setDocumentos({
+                propietario: user.id,
+                name: archivo.name,
+                type: archivo.type,
+                dateCreation: archivo.lastModified.toString(),
+                size: archivo.size.toString(),
+                base64: base64
+              });
 
-          } else {
+              console.log(documentos)
+              AxiosClient.post('/api/documents/', documentos).then(res => {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Insertado éxitosamente',
+                  showConfirmButton: false,
+                  timer: 1500
+                }).then(() => {
+                  handleClose();
+                  //navigate('/Config');
 
+                })
+
+                //window.location.href = '/Home';
+              }).catch(error => {
+
+                if (error.code === "ERR_NETWORK") {
+                  Swal.fire({
+                    icon: "error",
+                    title: error.status,
+                    text: "No hay conexión con el server",
+                  });
+                } else {
+                  Swal.fire({
+                    icon: "error",
+                    title: error.status,
+                    text: error.code,
+                  });
+                }
+
+              })
+
+            } else {
+
+            }
           }
 
-          //Axios
-          /* */
         }
-
-
       })
     }
   }
@@ -109,7 +124,7 @@ const Documentos = () => {
   return (
     <div>
       <div className="row">
-        <Col>Nombre Persona</Col>
+        <Col></Col>
       </div>
       <div className="row ">
         <Col className='col-sm-2'>
@@ -132,7 +147,7 @@ const Documentos = () => {
 
             <div className="row">
               <div className="col col-sm-9">
-                < Cards />
+                {/* < Cards />  */}
               </div>
 
               <div className="row"></div>

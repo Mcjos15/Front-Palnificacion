@@ -23,5 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 package-lock.json
-
+AxiosClient.ts
 src/config/AxiosClient.ts

@@ -18,7 +18,13 @@ const Navbar = () => {
                 <li>
                     <a href="/Documents" className="nav-link py-3 border-bottom">
                     <FontAwesomeIcon icon={faBook}></FontAwesomeIcon>
-                        <small>Documents</small>
+                        <small>Insert Archivo</small>
+                    </a>
+                </li>
+                <li>
+                    <a href="/ViewDocument" className="nav-link py-3 border-bottom">
+                    <FontAwesomeIcon icon={faBook}></FontAwesomeIcon>
+                        <small>View Documents</small>
                     </a>
                 </li>
                 <li>
