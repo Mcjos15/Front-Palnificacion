@@ -1,0 +1,12 @@
+.btn-card{
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    background-color: darkcyan;
+}
+.btns{
+    padding:0;
+}
+.card{
+    margin-top:10px;
+}

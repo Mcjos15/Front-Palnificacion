@@ -39,16 +39,13 @@ const Documentos = () => {
     if (archivos) {
 
       Array.from(archivos).forEach(archivo => {
-        console.log(archivo.name);
-
         if (!extensiones.exec(archivo.name)) {
           Swal.fire({
             icon: 'error',
             title: 'Extension Incorrecta',
-            text: '¡No se permite esa extension!',
-            footer: '<a href="">solo .txt|.docx|.xlsx|.pptx|.pdf|.jpg|.png</a>'
+            text: 'El documento '+`${archivo.name}`+' NO SE PUDO REGISTRAR',
+            footer: '<a>solo extensiones .txt|.docx|.xlsx|.pptx|.pdf|.jpg|.png</a>'
           })
-
         } else {
           const reader = new FileReader();
           reader.readAsDataURL(archivo);
