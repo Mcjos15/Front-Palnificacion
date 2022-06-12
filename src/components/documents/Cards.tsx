@@ -4,6 +4,10 @@ import doc from '../../assets/Image/documento.png'
 import AxiosClient from '../../config/AxiosClient';
 import { Documents } from '../../interfaces/Documents';
 import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashCan, faDownload } from '@fortawesome/free-solid-svg-icons'
+import '../../components/css/cards.css'
+
 
 interface Card {
     id?: string,
@@ -13,11 +17,14 @@ interface Card {
     type: string,
     dateCreation: string,
     size: string,
-    base64: string
+    base64: string,
 }
 
 
 const cardData: Card[] = [];
+
+//Lista de documentos elegidos
+const idDocuments: string[] = [];
 
 function Cards() {
     const [cards, setCards] = useState<Array<Card>>([]);
@@ -26,7 +33,7 @@ function Cards() {
     const changeNumber = () => {
         if (setRender) {
 
-            setRender(render+1);
+            setRender(render + 1);
         }
     }
 
@@ -53,7 +60,8 @@ function Cards() {
                         type: value[i].type,
                         dateCreation: value[i].dateCreation,
                         size: value[i].size,
-                        base64: value[i].Base64
+                        base64: value[i].Base64,
+                       
                     });
                 } else {
                     console.log("No sirve");
@@ -81,8 +89,47 @@ function Cards() {
 
 
     }, [])
+
+    //Pasa id de hijo a padre si select es true lo guarda si no busca el id en los guardados y elimina si
+    //quitaron el select
+    const handleSelect = (e:React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.currentTarget.checked);
+        if(e.currentTarget.checked){
+            idDocuments.push(e.currentTarget.value);
+        }else{
+            let pos = idDocuments.indexOf(e.currentTarget.value); //Agarra la posicion del que quitaron el select
+            if(pos!=null){
+                idDocuments.splice(pos,1); //elimina
+            }
+        }
+        
+   }
+
+    const handleDelete=(e:React.MouseEvent<HTMLButtonElement>) => {
+        console.log(idDocuments);
+    } 
+
+    const handleDownloads=(e:React.MouseEvent<HTMLButtonElement>) => {
+        console.log(idDocuments);
+    } 
+
     return (
-        <div className="container d-flex justify-content-center h-100">
+        <div >
+            <div className="row">
+            <div className="col-sm-4">
+             
+                    <button onClick= {handleDelete} style={{visibility: idDocuments.length>0?'visible':'hidden'}} >
+                        <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
+                    </button>
+                    
+                </div>
+                <div className="col-sm-4">
+                    <button onClick= {handleDownloads} style={{visibility: idDocuments.length>=2?'visible':'hidden'}}>
+                        <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
+                    </button>
+                </div>
+                
+            </div>
             <div className="row">
                 {
                     cards.map((card: Card) => {
@@ -90,7 +137,7 @@ function Cards() {
                             <div className="col-md-4" key={card.id}>
 
                                 <Card imageSource={card.image} title={card.name} text={'peso: ' + card.size + '\n Nombre del propietario ' + card.propietario}
-                                    base64={card.base64} type={card.type} id={card.id} setRender={setRender} render={render}></Card>
+                                    base64={card.base64} type={card.type} id={card.id} setRender={setRender} render={render} handleSelect={handleSelect}></Card>
                                 <br></br>
                             </div>
                         )
