@@ -4,14 +4,13 @@ import Navbar from '../shared/Navbar'
 import Footer from '../shared/Footer'
 import { Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashCan, faDownload } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function View() {
   return (
     <div>
-    <div className="row">
-      <Col></Col>
-    </div>
     <div className="row ">
       <Col className='col-sm-2'>
         <Navbar></Navbar>
@@ -22,24 +21,10 @@ export default function View() {
           <div className="row">
             <h1 className="titulo">Documentos</h1>
           </div>
-
           <div className="row">
-            <div className="col">
-             
-            </div>
-            <div className="col"></div>
-            <div className="col"></div>
-          </div>
-
-          <div className="row">
-            <div className="col col-sm-9">
+            <div className="col col-sm-11">
                < Cards /> 
             </div>
-
-            <div className="row"></div>
-
-            
-
           </div>
 
         </div>

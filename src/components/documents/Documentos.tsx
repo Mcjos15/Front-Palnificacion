@@ -11,7 +11,6 @@ import Swal from 'sweetalert2'
 import { User } from '../../interfaces/User';
 import { SideBarMenu } from '../shared/SideBarMenu';
 
-
 const Documentos = () => {
 
 
@@ -39,78 +38,84 @@ const Documentos = () => {
   //Se supone que este inserta con el boton 
   const insertArchivos = function (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
 
+    var extensiones = /(.txt|.docx|.xlsx|.pptx|.pdf|.jpg|.png)$/i;
     if (archivos) {
 
       Array.from(archivos).forEach(archivo => {
-        const reader = new FileReader();
-        reader.readAsDataURL(archivo);
-        reader.onload = function () {
+        if (!extensiones.exec(archivo.name)) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Extension Incorrecta',
+            text: 'El documento '+`${archivo.name}`+' NO SE PUDO REGISTRAR',
+            footer: '<a>solo extensiones .txt|.docx|.xlsx|.pptx|.pdf|.jpg|.png</a>'
+          })
+        } else {
+          const reader = new FileReader();
+          reader.readAsDataURL(archivo);
+          reader.onload = function () {
 
-          const base64 = reader.result;
+            const base64 = reader.result;
 
-          if (localStorage.getItem("user")) {
-            const data = (JSON.parse(localStorage.getItem("user")!));
-            const user: User = {
-              id: data.id,
-              Name: data.Name,
-              lastName: data.lastName,
-              correo: data.correo,
-              date: data.date,
-              password: ''
-            }
-
-            console.log(archivo.type)
-            setDocumentos({
-              propietario: user.id,
-              name: archivo.name,
-              type: archivo.type,
-              dateCreation: archivo.lastModified.toString(),
-              size: archivo.size.toString(),
-              base64: base64
-            });
-
-            console.log(documentos)
-            AxiosClient.post('/api/documents/', documentos).then(res => {
-              Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Insertado éxitosamente',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(() => {
-              handleClose();
-                //navigate('/Config');
-               
-            })
-
-              //window.location.href = '/Home';
-            }).catch(error => {
-
-              if (error.code === "ERR_NETWORK") {
-                Swal.fire({
-                  icon: "error",
-                  title: error.status,
-                  text: "No hay conexión con el server",
-                });
-              } else {
-                Swal.fire({
-                  icon: "error",
-                  title: error.status,
-                  text: error.code,
-                });
+            if (localStorage.getItem("user")) {
+              const data = (JSON.parse(localStorage.getItem("user")!));
+              const user: User = {
+                id: data.id,
+                Name: data.Name,
+                lastName: data.lastName,
+                correo: data.correo,
+                date: data.date,
+                password: ''
               }
 
-            })
+              console.log(archivo.type)
+              setDocumentos({
+                propietario: user.id,
+                name: archivo.name,
+                type: archivo.type,
+                dateCreation: archivo.lastModified.toString(),
+                size: archivo.size.toString(),
+                base64: base64
+              });
 
-          } else {
+              console.log(documentos)
+              AxiosClient.post('/api/documents/', documentos).then(res => {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Insertado éxitosamente',
+                  showConfirmButton: false,
+                  timer: 1500
+                }).then(() => {
+                  handleClose();
+                  //navigate('/Config');
 
+                })
+
+                //window.location.href = '/Home';
+              }).catch(error => {
+
+                if (error.code === "ERR_NETWORK") {
+                  Swal.fire({
+                    icon: "error",
+                    title: error.status,
+                    text: "No hay conexión con el server",
+                  });
+                } else {
+                  Swal.fire({
+                    icon: "error",
+                    title: error.status,
+                    text: error.code,
+                  });
+                }
+
+              })
+
+            } else {
+
+            }
           }
 
-          //Axios
-          /* */
         }
-
-
       })
     }
   }
@@ -144,7 +149,7 @@ const Documentos = () => {
 
             <div className="row">
               <div className="col col-sm-9">
-                 {/* < Cards />  */}
+                {/* < Cards />  */}
               </div>
 
               <div className="row"></div>
