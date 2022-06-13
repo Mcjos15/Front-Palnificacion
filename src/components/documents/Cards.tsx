@@ -7,6 +7,9 @@ import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faDownload } from '@fortawesome/free-solid-svg-icons'
 import '../../components/css/cards.css'
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
+
 
 
 interface Card {
@@ -20,8 +23,14 @@ interface Card {
     base64: string,
 }
 
+interface Data {
+    name: string,
+    base: string
+}
+
 
 const cardData: Card[] = [];
+let cardDataZip: Card[] = [];
 
 //Lista de documentos elegidos
 const idDocuments: string[] = [];
@@ -49,7 +58,7 @@ function Cards() {
 
 
             for (let i = 0; i < value.length; i++) {
-                console.log(value[i]);
+
 
                 if (propietarioLS) {
                     cardData.push({
@@ -61,8 +70,9 @@ function Cards() {
                         dateCreation: value[i].dateCreation,
                         size: value[i].size,
                         base64: value[i].Base64,
-                       
+
                     });
+                    console.log(value[i].Base64.split(','));
                 } else {
                     console.log("No sirve");
                 }
@@ -86,49 +96,81 @@ function Cards() {
     useEffect(() => {
 
         getDocuments();
+        console.log('1');
 
 
     }, [])
 
+
+
     //Pasa id de hijo a padre si select es true lo guarda si no busca el id en los guardados y elimina si
     //quitaron el select
-    const handleSelect = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.currentTarget.checked);
-        if(e.currentTarget.checked){
+        if (e.currentTarget.checked) {
             idDocuments.push(e.currentTarget.value);
-        }else{
+        } else {
             let pos = idDocuments.indexOf(e.currentTarget.value); //Agarra la posicion del que quitaron el select
-            if(pos!=null){
-                idDocuments.splice(pos,1); //elimina
+            if (pos != null) {
+                idDocuments.splice(pos, 1); //elimina
             }
         }
-        
-   }
 
-    const handleDelete=(e:React.MouseEvent<HTMLButtonElement>) => {
-        console.log(idDocuments);
-    } 
+    }
 
-    const handleDownloads=(e:React.MouseEvent<HTMLButtonElement>) => {
+    const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
         console.log(idDocuments);
-    } 
+    }
+
+    const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
+        var zip = new JSZip();
+        if (idDocuments.length >= 2) {
+
+            for (let i = 0; i < cards.length; i++) {
+                if (cards[i].id) {
+                    console.log('Entro');
+                    if (idDocuments.includes(cards[i].id!)) {
+                        cardDataZip.push(cards[i]);
+                        console.log('Entro 2');
+                        console.log(cardDataZip);
+                    }
+                }
+
+
+            }
+
+            cardDataZip.map(arr => {
+                zip.file(arr.name, arr.base64.split(',')[1], { base64: true });
+
+            });
+
+            zip.generateAsync({ type: 'blob' }).then(function (contend) {
+                saveAs(contend, 'ejem.zip');
+            });
+            zip = new JSZip();
+            cardDataZip = [];
+
+        } else {
+            //aca se pone la accion que se debe de hacer en ca
+        }
+    }
 
     return (
         <div >
             <div className="row">
-            <div className="col-sm-4">
-             
-                    <button onClick= {handleDelete} style={{visibility: idDocuments.length>0?'visible':'hidden'}} >
+                <div className="col-sm-4">
+
+                    <button onClick={handleDelete} style={{ visibility: idDocuments.length > 0 ? 'visible' : 'hidden' }} >
                         <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
                     </button>
-                    
+
                 </div>
                 <div className="col-sm-4">
-                    <button onClick= {handleDownloads} style={{visibility: idDocuments.length>=2?'visible':'hidden'}}>
+                    <button onClick={handleDownloads} >
                         <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
                     </button>
                 </div>
-                
+
             </div>
             <div className="row">
                 {

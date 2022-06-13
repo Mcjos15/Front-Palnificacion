@@ -56,6 +56,7 @@ const Documentos = () => {
 
             const base64 = reader.result;
 
+
             if (localStorage.getItem("user")) {
               const data = (JSON.parse(localStorage.getItem("user")!));
               const user: User = {
