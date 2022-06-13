@@ -78,7 +78,7 @@ const Documentos = () => {
                 base64: base64
               });
 
-              console.log(documentos)
+              
               AxiosClient.post('/api/documents/', documentos).then(res => {
                 Swal.fire({
                   position: 'center',

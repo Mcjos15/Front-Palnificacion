@@ -32,12 +32,35 @@ interface Data {
 const cardData: Card[] = [];
 let cardDataZip: Card[] = [];
 
+
 //Lista de documentos elegidos
 const idDocuments: string[] = [];
+//funcion que devueleve un array con los cards que coinciden con el id del segundo array ingresado
+const arrayWithCards = (vectId: string[], vectCards: Array<Card>) => {
+    let carData: Card[] = [];
+    for (let i = 0; i < vectCards.length; i++) {
+        if (vectCards[i].id) {
+
+            if (vectId.includes(vectCards[i].id!)) {
+                carData.push(vectCards[i]);
+
+            }
+        }
+
+
+    }
+
+    return carData;
+
+}
 
 function Cards() {
     const [cards, setCards] = useState<Array<Card>>([]);
     const [render, setRender] = useState(0);
+    const [documentos, setDocumentos] = React.useState<Documents | null>()
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
 
     const changeNumber = () => {
         if (setRender) {
@@ -106,7 +129,7 @@ function Cards() {
     //Pasa id de hijo a padre si select es true lo guarda si no busca el id en los guardados y elimina si
     //quitaron el select
     const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.currentTarget.checked);
+
         if (e.currentTarget.checked) {
             idDocuments.push(e.currentTarget.value);
         } else {
@@ -118,8 +141,60 @@ function Cards() {
 
     }
 
+
     const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log(idDocuments);
+        if (idDocuments.length > 0) {
+
+            let carData: Card[] = arrayWithCards(idDocuments, cards);
+
+            carData.map(arr => {
+                setDocumentos({
+                    propietario: arr.id,
+                    name: arr.name,
+                    type: arr.type,
+                    dateCreation: arr.dateCreation.toString(),
+                    size: arr.size.toString(),
+                    base64: arr.base64
+                });
+
+            });
+
+
+
+            AxiosClient.post('/api/documents/deleteMany', documentos).then(res => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Insertado éxitosamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    handleClose();
+                    //navigate('/Config');
+                    
+
+                })
+                console.log(res);
+                //window.location.href = '/Home';
+            }).catch(error => {
+
+                if (error.code === "ERR_NETWORK") {
+                    Swal.fire({
+                        icon: "error",
+                        title: error.status,
+                        text: "No hay conexión con el server",
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: error.status,
+                        text: error.code,
+                    });
+                }
+
+            })
+
+        }
     }
 
     const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -128,11 +203,10 @@ function Cards() {
 
             for (let i = 0; i < cards.length; i++) {
                 if (cards[i].id) {
-                    console.log('Entro');
+
                     if (idDocuments.includes(cards[i].id!)) {
                         cardDataZip.push(cards[i]);
-                        console.log('Entro 2');
-                        console.log(cardDataZip);
+
                     }
                 }
 
@@ -145,7 +219,7 @@ function Cards() {
             });
 
             zip.generateAsync({ type: 'blob' }).then(function (contend) {
-                saveAs(contend, 'ejem.zip');
+                saveAs(contend, 'Documentos.zip');
             });
             zip = new JSZip();
             cardDataZip = [];
@@ -160,7 +234,7 @@ function Cards() {
             <div className="row">
                 <div className="col-sm-4">
 
-                    <button onClick={handleDelete} style={{ visibility: idDocuments.length > 0 ? 'visible' : 'hidden' }} >
+                    <button onClick={handleDelete}>
                         <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
                     </button>
 
