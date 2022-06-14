@@ -56,6 +56,7 @@ const Documentos = () => {
 
             const base64 = reader.result;
 
+
             if (localStorage.getItem("user")) {
               const data = (JSON.parse(localStorage.getItem("user")!));
               const user: User = {
@@ -77,7 +78,7 @@ const Documentos = () => {
                 base64: base64
               });
 
-              console.log(documentos)
+              
               AxiosClient.post('/api/documents/', documentos).then(res => {
                 Swal.fire({
                   position: 'center',

@@ -1,7 +1,7 @@
 
 import { SideBarMenuContext } from "./SideBarMenu-context"
 import { AppContextInterface } from '../interfaces/Context';
-import { FcAdvertising } from 'react-icons/fc';
+import { FcAdvertising,FcSettings,FcAddImage,FcHome,FcViewDetails } from 'react-icons/fc';
 import profile from '../assets/Image/descarga.png'
 import { useReducer } from 'react';
 import { SideBarMenuReducer } from './SideBarMenu-Reducer';
@@ -14,21 +14,27 @@ const INITIAL_STATE: AppContextInterface = {
     items: [
         {
             id: "1",
-            label: "diel",
-            icon: FcAdvertising,
-            url: '/Config'
+            label: "Home",
+            icon: FcHome,
+            url: '/home'
         },
         {
             id: "2",
-            label: "Mc",
-            icon: FcAdvertising,
-            url: '/'
+            label: "Configuraciones",
+            icon: FcSettings,
+            url: '/Config'
         },
         {
             id: "3",
-            label: "obanm",
-            icon: FcAdvertising,
-            url: '/'
+            label: "Añadir documento",
+            icon: FcAddImage,
+            url: '/Documents'
+        },
+        {
+            id: "4",
+            label: "Ver documentos",
+            icon: FcViewDetails,
+            url: '/ViewDocument'
         }
     ],
 

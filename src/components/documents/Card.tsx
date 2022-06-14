@@ -1,13 +1,12 @@
-import React from 'react';
+
 import Swal from 'sweetalert2';
-import doc from '../../assets/Image/documento.png'
+
 import AxiosClient from '../../config/AxiosClient';
-import { render } from '@testing-library/react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faDownload } from '@fortawesome/free-solid-svg-icons'
 import '../../components/css/cards.css'
-import { ReadableByteStreamController } from 'stream/web';
-import  PropTypes from 'prop-types'
+
 
 function urltoFile(url: string, filename: string, mimeType: string) {
 
@@ -28,8 +27,11 @@ function urltoFile(url: string, filename: string, mimeType: string) {
 }
 
 
+
 function Card({ imageSource, id, title, text, url, base64, type, setRender, render, handleSelect }: any,
-    ) {
+) {
+
+  
     const handleClick = () => {
         if (base64 && type) {
             urltoFile(base64, title, type);
@@ -62,7 +64,6 @@ function Card({ imageSource, id, title, text, url, base64, type, setRender, rend
 
     }
 
-
     return (
         <div className="card text-center bg-dark animate__animated animate__fadeInUp">
             <div className="overflow">
@@ -77,7 +78,7 @@ function Card({ imageSource, id, title, text, url, base64, type, setRender, rend
                 </p>
                 <div className="row">
                     <div className="col btns">
-                        <input type="checkbox" value= {id}  onChange= {handleSelect}  />
+                        <input type="checkbox" value={id} onChange={handleSelect} />
 
                     </div>
                     <div className="col btns">
