@@ -23,10 +23,6 @@ interface Card {
     base64: string,
 }
 
-interface Data {
-    name: string,
-    base: string
-}
 
 
 const cardData: Card[] = [];
@@ -57,17 +53,11 @@ const arrayWithCards = (vectId: string[], vectCards: Array<Card>) => {
 function Cards() {
     const [cards, setCards] = useState<Array<Card>>([]);
     const [render, setRender] = useState(0);
-    const [documentos, setDocumentos] = React.useState<Documents | null>()
+    const [documentos, setDocumentos] = useState<Array<Documents>>([])
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
 
-    const changeNumber = () => {
-        if (setRender) {
-
-            setRender(render + 1);
-        }
-    }
 
 
     const getDocuments = async () => {
@@ -95,9 +85,7 @@ function Cards() {
                         base64: value[i].Base64,
 
                     });
-                    console.log(value[i].Base64.split(','));
-                } else {
-                    console.log("No sirve");
+                   
                 }
 
 
@@ -112,14 +100,12 @@ function Cards() {
                 title: error.status,
                 text: error.code,
             });
-            console.log(error);
 
         })
     }
     useEffect(() => {
 
         getDocuments();
-        console.log('1');
 
 
     }, [])
@@ -147,18 +133,24 @@ function Cards() {
 
             let carData: Card[] = arrayWithCards(idDocuments, cards);
 
-            carData.map(arr => {
-                setDocumentos({
-                    propietario: arr.id,
-                    name: arr.name,
-                    type: arr.type,
-                    dateCreation: arr.dateCreation.toString(),
-                    size: arr.size.toString(),
-                    base64: arr.base64
-                });
+            for (let i = 0; i < carData.length; i++) {
 
-            });
+                documentos.push({
+                    id: carData[i].id,
+                    propietario: carData[i].propietario,
+                    name: carData[i].name,
+                    type: carData[i].type,
+                    dateCreation: carData[i].dateCreation.toString(),
+                    size: carData[i].size.toString(),
+                    base64: carData[i].base64
+                })
 
+               
+
+            }
+
+            setDocumentos(documentos);
+            console.log(documentos);
 
 
             AxiosClient.post('/api/documents/deleteMany', documentos).then(res => {
@@ -171,10 +163,14 @@ function Cards() {
                 }).then(() => {
                     handleClose();
                     //navigate('/Config');
-                    
+                    setDocumentos([]);
+
+
+
 
                 })
-                console.log(res);
+
+                setDocumentos([]);
                 //window.location.href = '/Home';
             }).catch(error => {
 

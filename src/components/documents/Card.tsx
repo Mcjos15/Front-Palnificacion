@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+
 import Swal from 'sweetalert2';
-import doc from '../../assets/Image/documento.png'
+
 import AxiosClient from '../../config/AxiosClient';
-import { render } from '@testing-library/react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faDownload } from '@fortawesome/free-solid-svg-icons'
 import '../../components/css/cards.css'
-import { ReadableByteStreamController } from 'stream/web';
-import PropTypes from 'prop-types'
-import { useState } from 'react';
+
 
 function urltoFile(url: string, filename: string, mimeType: string) {
 
@@ -27,21 +25,13 @@ function urltoFile(url: string, filename: string, mimeType: string) {
         })
     );
 }
-interface Data {
-    base?: any
-    name: any
-}
 
-function createFile(url: string, fileName: string, mimeType: string) {
-    return fetch(url)
-    .then(function (res) { return res.arrayBuffer(); })
-    .then(function (buf) { return new File([buf], fileName, { type: mimeType }); })
-};
+
+
 function Card({ imageSource, id, title, text, url, base64, type, setRender, render, handleSelect }: any,
 ) {
 
-    console.log(createFile(base64,title, type));
-    const [data, setData] = useState([title, base64]);
+  
     const handleClick = () => {
         if (base64 && type) {
             urltoFile(base64, title, type);
