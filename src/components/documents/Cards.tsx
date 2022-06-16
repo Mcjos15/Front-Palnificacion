@@ -30,6 +30,7 @@ function Cards() {
     const [cards, setCards] = useState<Array<Card>>([]);
     const [render, setRender] = useState(0);
 
+    const [checked, setCheck] = useState(false);
     const changeNumber = () => {
         if (setRender) {
 
@@ -61,7 +62,7 @@ function Cards() {
                         dateCreation: value[i].dateCreation,
                         size: value[i].size,
                         base64: value[i].Base64,
-                       
+
                     });
                 } else {
                     console.log("No sirve");
@@ -92,44 +93,50 @@ function Cards() {
 
     //Pasa id de hijo a padre si select es true lo guarda si no busca el id en los guardados y elimina si
     //quitaron el select
-    const handleSelect = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.currentTarget.checked);
-        if(e.currentTarget.checked){
+        if (e.currentTarget.checked) {
             idDocuments.push(e.currentTarget.value);
-        }else{
+            if (idDocuments.length > 1) {
+                setCheck(true);
+            }
+        } else {
             let pos = idDocuments.indexOf(e.currentTarget.value); //Agarra la posicion del que quitaron el select
-            if(pos!=null){
-                idDocuments.splice(pos,1); //elimina
+            if (pos != null) {
+                idDocuments.splice(pos, 1); //elimina
+                if (idDocuments.length <= 1){
+                    setCheck(false);
+                }
             }
         }
-        
-   }
 
-    const handleDelete=(e:React.MouseEvent<HTMLButtonElement>) => {
-        console.log(idDocuments);
-    } 
+    }
 
-    const handleDownloads=(e:React.MouseEvent<HTMLButtonElement>) => {
+    const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
         console.log(idDocuments);
-    } 
+    }
+
+    const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log(idDocuments);
+    }
 
     return (
         <div >
-            <div className="row">
-            <div className="col-sm-4">
-             
-                    <button onClick= {handleDelete} style={{visibility: idDocuments.length>0?'visible':'hidden'}} >
-                        <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
-                    </button>
-                    
+            {checked ? (
+                <div className="row">
+                    <div className="col-sm-4">
+                        <button onClick={handleDelete}  >
+                            <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
+                        </button>
+                    </div>
+                    <div className="col-sm-4">
+                        <button onClick={handleDownloads} >
+                            <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
+                        </button>
+                    </div>
                 </div>
-                <div className="col-sm-4">
-                    <button onClick= {handleDownloads} style={{visibility: idDocuments.length>=2?'visible':'hidden'}}>
-                        <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
-                    </button>
-                </div>
-                
-            </div>
+            ) : (<div> </div>)}
+
             <div className="row">
                 {
                     cards.map((card: Card) => {
