@@ -2,7 +2,7 @@ import axios from 'axios';
 import { User } from '../interfaces/User';
 
 const AxiosClient = axios.create({
-  baseURL: "http://localhost:43012",
+  baseURL: "http://localhost:5000",
 })
 export default AxiosClient
 /*export class AxiosClient {

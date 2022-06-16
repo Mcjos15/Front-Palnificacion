@@ -15,8 +15,7 @@ const Documentos = () => {
 
 
   const [archivos, setArchivos] = React.useState<FileList | null>()
-
-  const [documentos, setDocumentos] = React.useState<Documents | null>()
+  const [documentos, setDocumentos] = useState<Array<Documents>>([])
 
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -38,15 +37,19 @@ const Documentos = () => {
   //Se supone que este inserta con el boton 
   const insertArchivos = function (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
 
+    var isDocument = true;
+
     var extensiones = /(.txt|.docx|.xlsx|.pptx|.pdf|.jpg|.png)$/i;
     if (archivos) {
 
       Array.from(archivos).forEach(archivo => {
         if (!extensiones.exec(archivo.name)) {
+
+          isDocument = false;
           Swal.fire({
             icon: 'error',
             title: 'Extension Incorrecta',
-            text: 'El documento '+`${archivo.name}`+' NO SE PUDO REGISTRAR',
+            text: 'El documento ' + `${archivo.name}` + ' NO SE PUDO REGISTRAR',
             footer: '<a>solo extensiones .txt|.docx|.xlsx|.pptx|.pdf|.jpg|.png</a>'
           })
         } else {
@@ -69,7 +72,7 @@ const Documentos = () => {
               }
 
               console.log(archivo.type)
-              setDocumentos({
+              documentos.push({
                 propietario: user.id,
                 name: archivo.name,
                 type: archivo.type,
@@ -78,46 +81,54 @@ const Documentos = () => {
                 base64: base64
               });
 
-              
-              AxiosClient.post('/api/documents/', documentos).then(res => {
-                Swal.fire({
-                  position: 'center',
-                  icon: 'success',
-                  title: 'Insertado éxitosamente',
-                  showConfirmButton: false,
-                  timer: 1500
-                }).then(() => {
-                  handleClose();
-                  //navigate('/Config');
+              setDocumentos(documentos);
 
-                })
 
-                //window.location.href = '/Home';
-              }).catch(error => {
-
-                if (error.code === "ERR_NETWORK") {
-                  Swal.fire({
-                    icon: "error",
-                    title: error.status,
-                    text: "No hay conexión con el server",
-                  });
-                } else {
-                  Swal.fire({
-                    icon: "error",
-                    title: error.status,
-                    text: error.code,
-                  });
-                }
-
-              })
 
             } else {
+              isDocument = false;
 
             }
           }
 
         }
       })
+      if (isDocument) {
+
+        console.log(documentos);
+        AxiosClient.post('/api/documents/insertMany', documentos).then(res => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Insertado éxitosamente',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            handleClose();
+            //navigate('/Config');
+
+          })
+
+          //window.location.href = '/Home';
+        }).catch(error => {
+
+          if (error.code === "ERR_NETWORK") {
+            Swal.fire({
+              icon: "error",
+              title: error.status,
+              text: "No hay conexión con el server",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: error.status,
+              text: error.code,
+            });
+          }
+
+        })
+      }
+
     }
   }
 
@@ -130,8 +141,8 @@ const Documentos = () => {
       <div className="row ">
         <Col className='col-sm-2'>
 
-        <SideBarMenu />
-    
+          <SideBarMenu />
+
         </Col>
 
         <Col className="col-sm-10">
