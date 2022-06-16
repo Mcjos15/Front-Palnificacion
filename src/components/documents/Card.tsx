@@ -28,7 +28,7 @@ function urltoFile(url: string, filename: string, mimeType: string) {
 
 
 
-function Card({ imageSource, id, title, text, url, base64, type, setRender, render, handleSelect }: any,
+function Card({ imageSource, id, title, text, url, base64, type, setRender, render, handleSelect,setRefresh,refresh }: any,
 ) {
 
   
@@ -46,9 +46,11 @@ function Card({ imageSource, id, title, text, url, base64, type, setRender, rend
     }
 
     const deleteCard = async () => {
-        console.log(id);
+
         await AxiosClient.delete('/api/documents/delete/' + id, { data: { id: id } }).then(res => {
             console.log(res);
+            setRefresh(!refresh);
+            console.log('refres',refresh);
             if (setRender) {
 
                 changeNumber();

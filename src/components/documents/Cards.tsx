@@ -54,6 +54,10 @@ function Cards() {
     const [cards, setCards] = useState<Array<Card>>([]);
     const [render, setRender] = useState(0);
     const [documentos, setDocumentos] = useState<Array<Documents>>([])
+
+    const [refresh, setRefresh] = useState(false);
+
+
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
@@ -64,8 +68,10 @@ function Cards() {
 
 
     const getDocuments = async () => {
+        
 
         await AxiosClient.get('/api/documents/').then(res => {
+            console.log("llamo");
 
 
             const value = res.data;
@@ -88,7 +94,7 @@ function Cards() {
                         base64: value[i].Base64,
 
                     });
-                   
+
                 }
 
 
@@ -108,10 +114,13 @@ function Cards() {
     }
     useEffect(() => {
 
+        console.log('funciona');
+        cards.splice(0, cards.length);
+        setCards([]);
         getDocuments();
 
 
-    }, [])
+    }, [refresh])
 
 
 
@@ -161,33 +170,30 @@ function Cards() {
                     base64: carData[i].base64
                 })
 
-               
+
 
             }
 
             setDocumentos(documentos);
-            console.log(documentos);
 
 
             AxiosClient.post('/api/documents/deleteMany', documentos).then(res => {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Insertado éxitosamente',
+                    title: 'borrado éxitosamente',
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
                     handleClose();
                     //navigate('/Config');
                     setDocumentos([]);
+                    setRefresh(!refresh);
 
 
 
 
                 })
-
-                setDocumentos([]);
-                //window.location.href = '/Home';
             }).catch(error => {
 
                 if (error.code === "ERR_NETWORK") {
@@ -207,6 +213,7 @@ function Cards() {
             })
 
         }
+
     }
 
     const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -265,7 +272,8 @@ function Cards() {
                             <div className="col-md-4" key={card.id}>
 
                                 <Card imageSource={card.image} title={card.name} text={'peso: ' + card.size + '\n Nombre del propietario ' + card.propietario}
-                                    base64={card.base64} type={card.type} id={card.id} setRender={setRender} render={render} handleSelect={handleSelect}></Card>
+                                    base64={card.base64} type={card.type} id={card.id} setRender={setRender}
+                                     render={render} handleSelect={handleSelect} refresh={refresh} setRefresh={setRefresh}></Card>
                                 <br></br>
                             </div>
                         )
