@@ -63,8 +63,6 @@ function Cards() {
     const handleShow = () => setShowModal(true);
 
     const [checked, setCheck] = useState(false);
-    const changeNumber = () => {
-        if (setRender) {
 
 
     const getDocuments = async () => {
@@ -114,7 +112,6 @@ function Cards() {
     }
     useEffect(() => {
 
-        console.log('funciona');
         cards.splice(0, cards.length);
         setCards([]);
         getDocuments();
@@ -145,13 +142,6 @@ function Cards() {
 
     }
 
-    const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log(idDocuments);
-    }
-
-    const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log(idDocuments);
-    }
 
     const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (idDocuments.length > 0) {
@@ -284,4 +274,4 @@ function Cards() {
     );
 }
 
-export default Cards
+export default Cards;

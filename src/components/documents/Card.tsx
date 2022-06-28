@@ -48,9 +48,7 @@ function Card({ imageSource, id, title, text, url, base64, type, setRender, rend
     const deleteCard = async () => {
 
         await AxiosClient.delete('/api/documents/delete/' + id, { data: { id: id } }).then(res => {
-            console.log(res);
             setRefresh(!refresh);
-            console.log('refres',refresh);
             if (setRender) {
 
                 changeNumber();
