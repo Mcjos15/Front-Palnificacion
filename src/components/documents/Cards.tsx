@@ -5,7 +5,7 @@ import AxiosClient from '../../config/AxiosClient';
 import { Documents } from '../../interfaces/Documents';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashCan, faDownload } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan, faDownload, faBoxes } from '@fortawesome/free-solid-svg-icons'
 import '../../components/css/cards.css'
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
@@ -66,7 +66,7 @@ function Cards() {
 
 
     const getDocuments = async () => {
-        
+
 
         await AxiosClient.get('/api/documents/').then(res => {
             console.log("llamo");
@@ -134,7 +134,7 @@ function Cards() {
             let pos = idDocuments.indexOf(e.currentTarget.value); //Agarra la posicion del que quitaron el select
             if (pos != null) {
                 idDocuments.splice(pos, 1); //elimina
-                if (idDocuments.length <= 1){
+                if (idDocuments.length <= 1) {
                     setCheck(false);
                 }
             }
@@ -240,21 +240,28 @@ function Cards() {
 
     return (
         <div >
-            {checked ? (
-                <div className="row">
-                    <div className="col-sm-4">
-                        <button onClick={handleDelete}  >
-                            <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
-                        </button>
-                    </div>
-                    <div className="col-sm-4">
-                        <button onClick={handleDownloads} >
-                            <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
-                        </button>
-                    </div>
+            <div className="row">
+                <div className="col-sm-4">
+                    <button onClick={handleDelete}  >
+                        <FontAwesomeIcon icon={faBoxes}></FontAwesomeIcon>
+                    </button>
                 </div>
-            ) : (<div> </div>)}
 
+                {checked ? (
+                    <div className="">
+                        <div className="col-sm-4">
+                            <button onClick={handleDelete}  >
+                                <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
+                            </button>
+                        </div>
+                        <div className="col-sm-4">
+                            <button onClick={handleDownloads} >
+                                <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
+                            </button>
+                        </div>
+                    </div>
+                ) : (<div> </div>)}
+            </div>
             <div className="row">
                 {
                     cards.map((card: Card) => {
@@ -263,7 +270,7 @@ function Cards() {
 
                                 <Card imageSource={card.image} title={card.name} text={'peso: ' + card.size + '\n Nombre del propietario ' + card.propietario}
                                     base64={card.base64} type={card.type} id={card.id} setRender={setRender}
-                                     render={render} handleSelect={handleSelect} refresh={refresh} setRefresh={setRefresh}></Card>
+                                    render={render} handleSelect={handleSelect} refresh={refresh} setRefresh={setRefresh}></Card>
                                 <br></br>
                             </div>
                         )
