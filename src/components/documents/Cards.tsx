@@ -206,6 +206,9 @@ function Cards() {
 
     }
 
+    const handleMining = (e: React.MouseEvent<HTMLButtonElement>)=>{
+        
+    }
     const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
         var zip = new JSZip();
         if (idDocuments.length >= 2) {
@@ -242,7 +245,7 @@ function Cards() {
         <div >
             <div className="row">
                 <div className="col-sm-4">
-                    <button onClick={handleDelete}  >
+                    <button onClick={handleMining}  >
                         <FontAwesomeIcon icon={faBoxes}></FontAwesomeIcon>
                     </button>
                 </div>
