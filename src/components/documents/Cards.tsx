@@ -249,21 +249,20 @@ function Cards() {
                         <FontAwesomeIcon icon={faBoxes}></FontAwesomeIcon>
                     </button>
                 </div>
-
-                {checked ? (
-                    <div className="">
-                        <div className="col-sm-4">
-                            <button onClick={handleDelete}  >
-                                <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
-                            </button>
-                        </div>
-                        <div className="col-sm-4">
-                            <button onClick={handleDownloads} >
-                                <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
-                            </button>
-                        </div>
-                    </div>
-                ) : (<div> </div>)}
+                <div className="col-sm-4">
+                    {checked ? (
+                        <button onClick={handleDelete}  >
+                            <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
+                        </button>
+                    ) : (<div> </div>)}
+                </div>
+                <div className="col-sm-4">
+                    {checked ? (
+                        <button onClick={handleDownloads} >
+                            <FontAwesomeIcon icon={faDownload}></FontAwesomeIcon>
+                        </button>
+                    ) : (<div> </div>)}
+                </div>
             </div>
             <div className="row">
                 {
