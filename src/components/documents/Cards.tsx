@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import doc from '../../assets/Image/documento.png'
+import spinner from '../../assets/Image/1.gif'
 import AxiosClient from '../../config/AxiosClient';
 import { Documents } from '../../interfaces/Documents';
+import { Button, Col, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan, faDownload, faBoxes } from '@fortawesome/free-solid-svg-icons'
@@ -64,6 +66,8 @@ function Cards() {
 
     const [checked, setCheck] = useState(false);
 
+    const [posts, setPosts] = useState([]);
+
 
     const getDocuments = async () => {
 
@@ -115,7 +119,6 @@ function Cards() {
         cards.splice(0, cards.length);
         setCards([]);
         getDocuments();
-
 
     }, [refresh])
 
@@ -207,7 +210,28 @@ function Cards() {
     }
 
     const handleMining = (e: React.MouseEvent<HTMLButtonElement>)=>{
+        loadPost(); 
+    }
+
+    const loadPost = async () => {
+        //Hasta que obtenga respuesta se muestra el cargando
         
+        handleShow();
+        //llamada a base de datos
+        const response = await AxiosClient.get('/api/documents/mining');
+        //recibe respuesta
+        setPosts(response.data);
+      
+        // Deja de mostrar el cargando
+        handleClose();
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Los documentos han sido minados',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          getDocuments();
     }
     const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
         var zip = new JSZip();
@@ -279,6 +303,20 @@ function Cards() {
                     })
                 }
             </div>
+
+            <div>
+                <Modal show={showModal} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Minando Archivos</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <div>
+                      <h1>Minando...</h1>
+                      <img src={spinner} width={150} height={150}/>
+                    </div>
+                  </Modal.Body>
+                </Modal>
+              </div>
         </div>
     );
 }
