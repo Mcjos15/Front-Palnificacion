@@ -308,7 +308,7 @@ function Cards() {
 
             <div>
                 <Modal show={showModal} onHide={handleClose}>
-                  <Modal.Header closeButton>
+                  <Modal.Header>
                     <Modal.Title>Minando Archivos</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
