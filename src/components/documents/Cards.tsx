@@ -231,7 +231,9 @@ function Cards() {
             showConfirmButton: false,
             timer: 1500
           })
-          getDocuments();
+
+          setRefresh(!refresh);
+         
     }
     const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
         var zip = new JSZip();
