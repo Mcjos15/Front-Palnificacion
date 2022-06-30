@@ -57,6 +57,8 @@ function Cards() {
     const [render, setRender] = useState(0);
     const [documentos, setDocumentos] = useState<Array<Documents>>([])
 
+    const [documentos2, setDocumentos2] = useState<Array<Documents>>([])// obtener la cantidad
+
     const [refresh, setRefresh] = useState(false);
 
 
@@ -77,6 +79,7 @@ function Cards() {
 
 
             const value = res.data;
+            setDocumentos2(res.data);
 
             const propietarioLS = (JSON.parse(localStorage.getItem("user")!));
 
@@ -182,10 +185,6 @@ function Cards() {
                     //navigate('/Config');
                     setDocumentos([]);
                     setRefresh(!refresh);
-
-
-
-
                 })
             }).catch(error => {
 
@@ -209,19 +208,36 @@ function Cards() {
 
     }
 
-    const handleMining = (e: React.MouseEvent<HTMLButtonElement>)=>{
-        loadPost(); 
+    const handleMining = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+        AxiosClient.get('/api/configuraciones/getNumberDocuments').then(res => {
+            if (res.data.NumeroRegistro <= documentos2.length) {
+                 loadPost(); 
+            } else {
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'No se puede minar!',
+                    footer: '<a>Documentos insuficientes para el minado</a>'
+                })
+
+            }
+
+        })
+
+
     }
 
     const loadPost = async () => {
         //Hasta que obtenga respuesta se muestra el cargando
-        
+
         handleShow();
         //llamada a base de datos
         const response = await AxiosClient.get('/api/documents/mining');
         //recibe respuesta
         setPosts(response.data);
-      
+
         // Deja de mostrar el cargando
         handleClose();
         Swal.fire({
@@ -230,10 +246,10 @@ function Cards() {
             title: 'Los documentos han sido minados',
             showConfirmButton: false,
             timer: 1500
-          })
+        })
 
-          setRefresh(!refresh);
-         
+        setRefresh(!refresh);
+
     }
     const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
         var zip = new JSZip();
@@ -308,17 +324,17 @@ function Cards() {
 
             <div>
                 <Modal show={showModal} onHide={handleClose}>
-                  <Modal.Header>
-                    <Modal.Title>Minando Archivos</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <div>
-                      <h1>Minando...</h1>
-                      <img src={spinner} width={150} height={150}/>
-                    </div>
-                  </Modal.Body>
+                    <Modal.Header>
+                        <Modal.Title>Minando Archivos</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div>
+                            <h1>Minando...</h1>
+                            <img src={spinner} width={150} height={150} />
+                        </div>
+                    </Modal.Body>
                 </Modal>
-              </div>
+            </div>
         </div>
     );
 }
