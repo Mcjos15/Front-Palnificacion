@@ -13,6 +13,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Cards from './components/documents/Cards';
 
 import { SideBarMenuProvider } from './context/SideBarMenu-provider'
+import Bloques from './components/bloques/Bloques';
 function App() {
 
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/Documents" element={<Documents />} />
           <Route path="/card" element={<Cards />} />
           <Route path="/ViewDocument" element={<ViewDocuments />} />
+          <Route path="/bloques" element={<Bloques />} />
         </Routes>
       </BrowserRouter>
     </SideBarMenuProvider>

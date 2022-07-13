@@ -13,6 +13,40 @@ import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 
 
+const getDataForZip = (cards: Card[]) => {
+    let cardDataZip: any[] = [];
+    for (let i = 0; i < cards.length; i++) {
+        if (cards[i].id) {
+
+            if (idDocuments.includes(cards[i].id!)) {
+                cardDataZip.push(cards[i]);
+
+            }
+        }
+
+
+    }
+    return cardDataZip;
+}
+export const makeZip = (documentes: any) => {
+    var zip = new JSZip();
+    let cardDataZip: any[] = documentes;
+
+
+
+
+    cardDataZip.map(arr => {
+        zip.file(arr.name, arr.Base64.split(',')[1], { base64: true });
+
+    });
+
+    zip.generateAsync({ type: 'blob' }).then(function (contend) {
+        saveAs(contend, 'Documentos.zip');
+    });
+    zip = new JSZip();
+    cardDataZip = [];
+}
+
 
 interface Card {
     id?: string,
@@ -22,7 +56,7 @@ interface Card {
     type: string,
     dateCreation: string,
     size: string,
-    base64: string,
+    Base64: string,
 }
 
 
@@ -81,6 +115,7 @@ function Cards() {
             const value = res.data;
             setDocumentos2(res.data);
 
+
             const propietarioLS = (JSON.parse(localStorage.getItem("user")!));
 
 
@@ -96,7 +131,7 @@ function Cards() {
                         type: value[i].type,
                         dateCreation: value[i].dateCreation,
                         size: value[i].size,
-                        base64: value[i].Base64,
+                        Base64: value[i].Base64,
 
                     });
 
@@ -163,7 +198,7 @@ function Cards() {
                     type: carData[i].type,
                     dateCreation: carData[i].dateCreation.toString(),
                     size: carData[i].size.toString(),
-                    base64: carData[i].base64
+                    base64: carData[i].Base64
                 })
 
 
@@ -212,7 +247,7 @@ function Cards() {
 
         AxiosClient.get('/api/configuraciones/getNumberDocuments').then(res => {
             if (res.data.NumeroRegistro <= documentos2.length) {
-                 loadPost(); 
+                loadPost();
             } else {
 
                 Swal.fire({
@@ -252,31 +287,11 @@ function Cards() {
 
     }
     const handleDownloads = (e: React.MouseEvent<HTMLButtonElement>) => {
-        var zip = new JSZip();
         if (idDocuments.length >= 2) {
 
-            for (let i = 0; i < cards.length; i++) {
-                if (cards[i].id) {
+            //Se hizo más modular el codigo, quedo bastante guapo la verdad.
+            makeZip(getDataForZip(cards));
 
-                    if (idDocuments.includes(cards[i].id!)) {
-                        cardDataZip.push(cards[i]);
-
-                    }
-                }
-
-
-            }
-
-            cardDataZip.map(arr => {
-                zip.file(arr.name, arr.base64.split(',')[1], { base64: true });
-
-            });
-
-            zip.generateAsync({ type: 'blob' }).then(function (contend) {
-                saveAs(contend, 'Documentos.zip');
-            });
-            zip = new JSZip();
-            cardDataZip = [];
 
         } else {
             //aca se pone la accion que se debe de hacer en ca
@@ -313,7 +328,7 @@ function Cards() {
                             <div className="col-md-4" key={card.id}>
 
                                 <Card imageSource={card.image} title={card.name} text={'peso: ' + card.size + '\n Nombre del propietario ' + card.propietario}
-                                    base64={card.base64} type={card.type} id={card.id} setRender={setRender}
+                                    base64={card.Base64} type={card.type} id={card.id} setRender={setRender}
                                     render={render} handleSelect={handleSelect} refresh={refresh} setRefresh={setRefresh}></Card>
                                 <br></br>
                             </div>

@@ -35,6 +35,12 @@ const INITIAL_STATE: AppContextInterface = {
             label: "Ver documentos",
             icon: FcViewDetails,
             url: '/ViewDocument'
+        },
+        {
+            id: "5",
+            label: "Ver bloques",
+            icon: FcViewDetails,
+            url: '/bloques'
         }
     ],
 
