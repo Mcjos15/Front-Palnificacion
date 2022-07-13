@@ -99,7 +99,7 @@ const Bloques = () => {
         <div className="container">
             <Card>
                 <DataTable
-                    title="Movies"
+                    title="Bloques"
                     columns={columnsD}
                     data={bloques}
                     defaultSortFieldId="title"
