@@ -146,7 +146,6 @@ const Config = () => {
             </Row>
             <Row>
                 <Col className='col-sm-2'>
-                    <Navbar></Navbar>
                     <SideBarMenu />
                 </Col>
                 <Col className="col-sm-10">

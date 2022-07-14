@@ -1,7 +1,7 @@
 
 import { SideBarMenuContext } from "./SideBarMenu-context"
 import { AppContextInterface } from '../interfaces/Context';
-import { FcAdvertising,FcSettings,FcAddImage,FcHome,FcViewDetails } from 'react-icons/fc';
+import { FcAdvertising,FcSettings,FcAddImage,FcHome,FcViewDetails, FcOrgUnit } from 'react-icons/fc';
 import profile from '../assets/Image/descarga.png'
 import { useReducer } from 'react';
 import { SideBarMenuReducer } from './SideBarMenu-Reducer';
@@ -39,7 +39,7 @@ const INITIAL_STATE: AppContextInterface = {
         {
             id: "5",
             label: "Ver bloques",
-            icon: FcViewDetails,
+            icon: FcOrgUnit,
             url: '/bloques'
         }
     ],
