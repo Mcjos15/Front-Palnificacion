@@ -11,6 +11,8 @@ import { faTrashCan, faDownload, faBoxes } from '@fortawesome/free-solid-svg-ico
 import '../../components/css/cards.css'
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
+import { useLocation } from 'react-router-dom';
+import { SideBarMenu } from '../shared/SideBarMenu';
 
 
 const getDataForZip = (cards: Card[]) => {
@@ -86,7 +88,9 @@ const arrayWithCards = (vectId: string[], vectCards: Array<Card>) => {
 
 }
 
-function Cards() {
+function Cards(documentsZip: any = null) {
+
+    const { state } = useLocation();
     const [cards, setCards] = useState<Array<Card>>([]);
     const [render, setRender] = useState(0);
     const [documentos, setDocumentos] = useState<Array<Documents>>([])
@@ -104,53 +108,92 @@ function Cards() {
 
     const [posts, setPosts] = useState([]);
 
-
-    const getDocuments = async () => {
-
-
-        await AxiosClient.get('/api/documents/').then(res => {
-            console.log("llamo");
+    const [isPassByParams, setIsPassByParams] = useState(false);
 
 
-            const value = res.data;
-            setDocumentos2(res.data);
+    const ShowDocuments = (value: any) => {
+        setDocumentos2(value);
 
 
-            const propietarioLS = (JSON.parse(localStorage.getItem("user")!));
+        const propietarioLS = (JSON.parse(localStorage.getItem("user")!));
 
 
-            for (let i = 0; i < value.length; i++) {
+        for (let i = 0; i < value.length; i++) {
 
 
-                if (propietarioLS) {
-                    cardData.push({
-                        id: value[i].id,
-                        image: doc,
-                        propietario: propietarioLS!.Name,
-                        name: value[i].name,
-                        type: value[i].type,
-                        dateCreation: value[i].dateCreation,
-                        size: value[i].size,
-                        Base64: value[i].Base64,
+            if (propietarioLS) {
+                cardData.push({
+                    id: value[i].id,
+                    image: doc,
+                    propietario: propietarioLS!.Name,
+                    name: value[i].name,
+                    type: value[i].type,
+                    dateCreation: value[i].dateCreation,
+                    size: value[i].size,
+                    Base64: value[i].Base64,
 
-                    });
-
-                }
-
+                });
 
             }
-            setCards(cardData);
-
-        }).catch(error => {
 
 
-            Swal.fire({
-                icon: "error",
-                title: error.status,
-                text: error.code,
-            });
+        }
+        setCards(cardData);
 
-        })
+    }
+    const getDocuments = async () => {
+
+        if (state) {
+            console.log(documentsZip);
+            ShowDocuments(state);
+            setIsPassByParams(true);
+
+        } else {
+            await AxiosClient.get('/api/documents/').then(res => {
+                console.log("llamo");
+                console.log(state);
+
+
+                const value = res.data;
+                setDocumentos2(value);
+
+
+                const propietarioLS = (JSON.parse(localStorage.getItem("user")!));
+
+
+                for (let i = 0; i < value.length; i++) {
+
+
+                    if (propietarioLS) {
+                        cardData.push({
+                            id: value[i].id,
+                            image: doc,
+                            propietario: propietarioLS!.Name,
+                            name: value[i].name,
+                            type: value[i].type,
+                            dateCreation: value[i].dateCreation,
+                            size: value[i].size,
+                            Base64: value[i].Base64,
+
+                        });
+
+                    }
+
+
+                }
+                setCards(cardData);
+
+            }).catch(error => {
+
+
+                Swal.fire({
+                    icon: "error",
+                    title: error.status,
+                    text: error.code,
+                });
+
+            })
+        }
     }
     useEffect(() => {
 
@@ -302,9 +345,9 @@ function Cards() {
         <div >
             <div className="row">
                 <div className="col-sm-4">
-                    <button onClick={handleMining}  >
+                    {isPassByParams ? (<div> </div>) : (<button onClick={handleMining}  >
                         <FontAwesomeIcon icon={faBoxes}></FontAwesomeIcon>
-                    </button>
+                    </button>)}
                 </div>
                 <div className="col-sm-4">
                     {checked ? (
@@ -350,6 +393,7 @@ function Cards() {
                     </Modal.Body>
                 </Modal>
             </div>
+            <SideBarMenu />
         </div>
     );
 }

@@ -5,12 +5,18 @@ import DataTable from "react-data-table-component";
 import Card from "@material-ui/core/Card";
 import SortIcon from "@material-ui/icons/ArrowDownward";
 
-import { makeZip } from '../documents/Cards';
+import Cards, { makeZip } from '../documents/Cards';
 
+
+import { Link, useNavigate } from 'react-router-dom';
+import { SideBarMenu } from '../shared/SideBarMenu';
+import { Col } from 'react-bootstrap';
 
 
 
 const Bloques = () => {
+    const navigate = useNavigate();
+
     const [bloques, setBloques] = React.useState([]);
     const [selectedData, setSelectedData] = React.useState();
     const columnsD: any =
@@ -53,6 +59,15 @@ const Bloques = () => {
                 ignoreRowClick: true,
                 allowOverflow: true,
                 button: true,
+            },
+            {
+                name: "Ver documentos",
+                selector: (row: any) => row.idBloque,
+                cell: (row: any) => <button onClick={handleDocuments} id={row.hash}>Ver documentos</button>,
+                ignoreRowClick: true,
+                allowOverflow: true,
+                button: true,
+
             }
         ];
     useEffect(() => {
@@ -81,9 +96,16 @@ const Bloques = () => {
 
         }
     };
-    const handleChange = (state: any) => {
-        setSelectedData(state.selectedRows);
-        console.log(selectedData);
+    const handleDocuments = (state: any) => {
+        let documentes: any = bloques.filter((bloque: any) => bloque.hash === state.target.id);
+        console.log(documentes);
+
+
+
+
+
+        navigate('/card', { state: documentes[0].documentos });
+
     };
     const handleButtonClick = (state: any) => {
         console.log('clicked');
@@ -97,6 +119,11 @@ const Bloques = () => {
 
     return (
         <div className="container">
+            <Col className='col-sm-2'>
+
+                <SideBarMenu />
+
+            </Col>
             <Card>
                 <DataTable
                     title="Bloques"

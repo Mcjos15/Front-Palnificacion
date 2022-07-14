@@ -32,7 +32,7 @@ export default function View() {
 
       </div>
       <div>
-        <SideBarMenu />
+      
       </div>
       <div>
         <Footer></Footer>
